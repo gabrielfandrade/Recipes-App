@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
@@ -6,9 +7,15 @@ import searchIcon from '../images/searchIcon.svg';
 function Header({ title, condition }) {
   return (
     <header>
-      <button type="button">
-        <img src={ profileIcon } alt="profile" data-testid="profile-top-btn" />
-      </button>
+      <Link to="/profile">
+        <button type="button">
+          <img
+            src={ profileIcon }
+            alt="profile"
+            data-testid="profile-top-btn"
+          />
+        </button>
+      </Link>
       {
         condition
         && (
