@@ -47,12 +47,12 @@ describe('Testes para a página de Login', () => {
     expect(buttonEnter).toBeDisabled();
   })
 
-  // it('Verifica se ao clicar no botão a rota é redirecionada para /foods', () => {
-  //   renderWithRouter(<Login />);
-  //   const buttonEnter = screen.getByTestId('login-submit-btn');
-  //   userEvent.click(buttonEnter);
+  it('Verifica se ao clicar no botão a rota é redirecionada para /foods', () => {
+    renderWithRouter(<Login />);
+    const buttonEnter = screen.getByTestId('login-submit-btn');
+    userEvent.click(buttonEnter);
 
-  //   const elementHeading = screen.getByTestId('foods-test');
-  //   expect(elementHeading).toHaveTextContent();
-  // })
+    const elementHeading = screen.getByTestId('foods-test');
+    expect(elementHeading).toHaveTextContent();
+  })
 });
