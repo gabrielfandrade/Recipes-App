@@ -25,6 +25,14 @@ function Login() {
     }));
   };
 
+  const handleClick = () => {
+    const { email } = login;
+    const user = { email };
+    localStorage.setItem('user', JSON.stringify(user));
+    localStorage.setItem('mealsToken', 1);
+    localStorage.setItem('cocktailsToken', 1);
+  };
+
   return (
     <div>
       <fieldset>
@@ -51,6 +59,7 @@ function Login() {
           type="button"
           disabled={ !(validateEmail() && validatePassword()) }
           data-testid="login-submit-btn"
+          onClick={ () => handleClick() }
         >
           Enter
         </button>
