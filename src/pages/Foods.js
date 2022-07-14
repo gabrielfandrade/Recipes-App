@@ -6,7 +6,7 @@ function Recipes() {
   return (
     <div>
       <Header title="Foods" condition />
-      <h1>
+      <h1 data-testid="foods-test">
         Recipes
       </h1>
     </div>
