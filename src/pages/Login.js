@@ -71,7 +71,9 @@ function Login({ history }) {
 }
 
 Login.propTypes = {
-  history: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
 };
 
 export default Login;
