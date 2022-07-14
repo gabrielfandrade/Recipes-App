@@ -2,7 +2,7 @@ import React from 'react';
 import { cleanup } from "@testing-library/react";
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import renderWithRouter from '../renderWithRouter';
+import renderWithRouter from './mocks/renderWithRouter';
 import App from '../App';
 import Login from '../pages/Login';
 
