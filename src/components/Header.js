@@ -1,10 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
 
 function Header({ title, condition }) {
+  const [inputSearch, setInputSearch] = useState(false);
+
+  const handleSearch = () => {
+    setInputSearch(!inputSearch);
+  };
+
   return (
     <header>
       <Link to="/profile">
@@ -19,9 +25,15 @@ function Header({ title, condition }) {
       {
         condition
         && (
-          <button type="button">
+          <button type="button" onClick={ handleSearch }>
             <img src={ searchIcon } alt="search" data-testid="search-top-btn" />
           </button>
+        )
+      }
+      {
+        inputSearch
+        && (
+          <input type="text" data-testid="search-input" />
         )
       }
       <h2 data-testid="page-title">
