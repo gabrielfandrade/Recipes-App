@@ -5,10 +5,42 @@ function SearchBar() {
   return (
     <div>
       <input type="text" data-testid="search-input" />
+
       <div>
-        {/* <input type="radio" id="ingredient" name="ingredient" value="ingredient"
-              checked>
-        <label for="huey">Huey</label> */}
+        <label htmlFor="ingredient-radio">
+          Ingredient
+          <input
+            type="radio"
+            name="search-radio"
+            data-testid="ingredient-search-radio"
+            id="ingredient-radio"
+            value="Ingredient"
+          />
+        </label>
+
+        <label htmlFor="name-radio">
+          Name
+          <input
+            type="radio"
+            name="search-radio"
+            data-testid="name-search-radio"
+            id="name-radio"
+            value="Name"
+          />
+        </label>
+
+        <label htmlFor="first-radio">
+          First Letter
+          <input
+            type="radio"
+            name="search-radio"
+            data-testid="first-letter-search-radio"
+            id="first-radio"
+            value="FirstLetter"
+          />
+        </label>
+
+        <button data-testid="exec-search-btn" type="button">Search</button>
       </div>
     </div>
   );
