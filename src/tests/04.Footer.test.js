@@ -1,6 +1,6 @@
 import React from 'react';
 // import { cleanup } from "@testing-library/react";
-import { render, screen, waitFor } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import renderWithRouter from './mocks/renderWithRouter';
 import App from '../App';
@@ -23,17 +23,22 @@ describe('Teste de cobertura do componente Footer', () => {
 
     history.push('/foods');
     
-    const btnDrinks = screen.getByTestId('drinks-bottom-btn');
+    let btnDrinks = screen.getByTestId('drinks-bottom-btn');
     expect(btnDrinks).toBeInTheDocument();
 
-    const btnFoods = screen.getByTestId('food-bottom-btn');
+    let btnFoods = screen.getByTestId('food-bottom-btn');
     expect(btnFoods).toBeInTheDocument();
 
     userEvent.click(btnDrinks);
 
+    btnDrinks = screen.getByTestId('drinks-bottom-btn');
     expect(btnDrinks).toBeInTheDocument();
+    btnFoods = screen.getByTestId('food-bottom-btn');
     expect(btnFoods).toBeInTheDocument();
     
+    const title = screen.getByTestId('page-title');
+    expect(title).toHaveTextContent(/drinks/i);
+
   });
 
 });
