@@ -8,7 +8,11 @@ function Provider({ children }) {
 
   const request = async (type, filter, inputSearch) => {
     const api = await recipesApi(type, filter, inputSearch);
-    setRecipes(api);
+    if (!api) {
+      global.alert('Sorry, we haven\'t found any recipes for these filters.');
+    } else {
+      setRecipes(api);
+    }
   };
 
   // useEffect(() => {
