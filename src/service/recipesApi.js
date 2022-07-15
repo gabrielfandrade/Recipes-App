@@ -20,6 +20,5 @@ const getRecipesApi = async (type, filter, inputSearch) => {
 
   return response.ok ? Promise.resolve(data[type]) : Promise.reject(data);
 };
-// drinks: []
-// meals: []
+
 export default getRecipesApi;

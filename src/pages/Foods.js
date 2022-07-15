@@ -2,9 +2,10 @@ import React, { useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import Recipes from '../components/Recipes';
 import appContext from '../context/Context';
 
-function Recipes({ history }) {
+function Foods({ history }) {
   const { recipes } = useContext(appContext);
 
   useEffect(() => {
@@ -20,13 +21,29 @@ function Recipes({ history }) {
       <h1 data-testid="foods-test">
         Recipes
       </h1>
+      {
+        recipes.map((recipe, index) => {
+          const limit = 11;
+          if (index <= limit) {
+            return (
+              <Recipes
+                key={ index }
+                name={ recipe.strMeal }
+                img={ recipe.strMealThumb }
+                index={ index }
+              />
+            );
+          }
+          return null;
+        })
+      }
       <Footer />
     </div>
   );
 }
 
-Recipes.propTypes = {
+Foods.propTypes = {
   history: PropTypes.shape().isRequired,
 };
 
-export default Recipes;
+export default Foods;

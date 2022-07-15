@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import appContext from '../context/Context';
+import Recipes from '../components/Recipes';
 
-function DoneRecipes({ history }) {
+function Drinks({ history }) {
   const { recipes } = useContext(appContext);
 
   useEffect(() => {
@@ -17,13 +18,32 @@ function DoneRecipes({ history }) {
   return (
     <div>
       <Header title="Drinks" condition history={ history } />
+      <h1 data-testid="foods-test">
+        Recipes
+      </h1>
+      {
+        recipes.map((recipe, index) => {
+          const limit = 11;
+          if (index <= limit) {
+            return (
+              <Recipes
+                key={ index }
+                name={ recipe.strDrink }
+                img={ recipe.strDrinkThumb }
+                index={ index }
+              />
+            );
+          }
+          return null;
+        })
+      }
       <Footer />
     </div>
   );
 }
 
-DoneRecipes.propTypes = {
+Drinks.propTypes = {
   history: PropTypes.shape().isRequired,
 };
 
-export default DoneRecipes;
+export default Drinks;
