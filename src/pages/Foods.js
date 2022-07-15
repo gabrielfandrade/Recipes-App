@@ -5,11 +5,14 @@ import Footer from '../components/Footer';
 import appContext from '../context/Context';
 
 function Recipes({ history }) {
-  // const { recipes } = useContext(appContext);
+  const { recipes } = useContext(appContext);
 
-  // useEffect(() => {
-
-  // }, [recipes]);
+  useEffect(() => {
+    if (recipes.length === 1) {
+      const { idMeal } = recipes[0];
+      history.push(`/foods/${idMeal}`);
+    }
+  }, [recipes, history]);
 
   return (
     <div>

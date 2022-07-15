@@ -4,7 +4,7 @@ import Context from './Context';
 import recipesApi from '../service/recipesApi';
 
 function Provider({ children }) {
-  const [recipes, setRecipes] = useState([{}]);
+  const [recipes, setRecipes] = useState([]);
 
   const request = async (type, filter, inputSearch) => {
     const api = await recipesApi(type, filter, inputSearch);
