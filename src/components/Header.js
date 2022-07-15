@@ -5,7 +5,7 @@ import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
 import SearchBar from './SearchBar';
 
-function Header({ title, condition }) {
+function Header({ history, title, condition }) {
   const [inputSearch, setInputSearch] = useState(false);
 
   const handleSearch = () => {
@@ -35,7 +35,7 @@ function Header({ title, condition }) {
         inputSearch
         && (
           // <input type="text" data-testid="search-input" />
-          <SearchBar />
+          <SearchBar history={ history } />
         )
       }
       <h2 data-testid="page-title">
@@ -48,6 +48,7 @@ function Header({ title, condition }) {
 Header.propTypes = {
   title: PropTypes.string.isRequired,
   condition: PropTypes.bool.isRequired,
+  history: PropTypes.shape().isRequired,
 };
 
 export default Header;
