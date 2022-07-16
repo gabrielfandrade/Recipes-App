@@ -21,13 +21,11 @@ function SearchBar({ history }) {
     }
   };
 
-  const handleRadio = ({ target: { value, checked } }) => {
-    if (checked) {
-      setSearchForm((prev) => ({
-        ...prev,
-        radio: value,
-      }));
-    }
+  const handleRadio = ({ target: { value } }) => {
+    setSearchForm((prev) => ({
+      ...prev,
+      radio: value,
+    }));
   };
 
   return (
