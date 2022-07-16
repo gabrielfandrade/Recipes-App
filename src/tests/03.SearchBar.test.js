@@ -44,8 +44,6 @@ describe('Testes do componente SearchBar', () => {
 
     mockWithMeals();
 
-    const mockURL = 'https://www.themealdb.com/api/json/v1/1/search.php?s=Apple';
-
     const inputEmail = screen.getByTestId('email-input');
     const inputPassword = screen.getByTestId('password-input');
     const buttonEnter = screen.getByTestId('login-submit-btn');
@@ -189,5 +187,64 @@ describe('Testes do componente SearchBar', () => {
 
     expect(global.alert).toHaveBeenCalledTimes(1);
     expect(global.alert).toHaveBeenCalledWith(mockAlertText);
+  })
+
+  it('Verifica se é redirecionada para a pagina RecipeDetails', async () => {
+    const mock = () => {
+      jest.spyOn(global, 'fetch')
+        .mockImplementation(async () => Promise.resolve({
+          status: 200,
+          ok: true,
+          json: () => Promise.resolve({drinks: [
+            {
+            "strDrink": "Apple Berry Smoothie",
+            "strDrinkThumb": "https://www.thecocktaildb.com/images/media/drink/xwqvur1468876473.jpg",
+            "idDrink": "12710"
+            }
+            ]}),
+        }));
+    }
+
+    mock();
+
+    await act(async () => {
+      renderWithRouter(<App />)
+    });
+
+    const inputEmail = screen.getByTestId('email-input');
+    const inputPassword = screen.getByTestId('password-input');
+    const buttonEnter = screen.getByTestId('login-submit-btn');
+
+    userEvent.type(inputEmail, 'teste@teste.com');
+    userEvent.type(inputPassword, '1234567');
+    userEvent.click(buttonEnter);
+
+    const btnDrinks = screen.getByTestId('drinks-bottom-btn');
+    userEvent.click(btnDrinks);
+
+    const btnFilter = screen.getByTestId('search-top-btn');
+    
+    userEvent.click(btnFilter);
+
+    const input = screen.getByTestId('search-input');
+    expect(input).toBeInTheDocument();
+
+    const radio = screen.getByTestId('ingredient-search-radio');
+    expect(radio).toBeInTheDocument();
+    expect(radio.checked).toBeFalsy();
+
+    const btnSearch = screen.getByTestId('exec-search-btn');
+    expect(btnSearch).toBeInTheDocument();  
+
+    userEvent.type(input, 'Apple');
+    userEvent.click(radio);
+    expect(radio.checked).toBeTruthy();
+
+    await act(async () => {
+      userEvent.click(btnSearch);
+    })
+
+    const detailsPage = screen.getByText(/recipe details/i);
+    expect(detailsPage).toBeInTheDocument(); 
   })
 })
