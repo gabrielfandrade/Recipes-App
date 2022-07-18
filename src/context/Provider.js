@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Context from './Context';
-import { getRecipesApi, firstRecipes } from '../service/recipesApi';
+import { getRecipesApi, firstRecipes, fiveCategories } from '../service/recipesApi';
 
 function Provider({ children }) {
   const [recipes, setRecipes] = useState([]);
+  const [categories, setCategories] = useState([]);
 
   const request = async (type, filter, inputSearch) => {
     const api = await getRecipesApi(type, filter, inputSearch);
@@ -20,23 +21,20 @@ function Provider({ children }) {
     setRecipes(api);
   };
 
-  // useEffect(() => {
-  //   const request = async () => {
-  //     const api = await recipesApi();
-  //     setRecipes(api);
-  //   };
-  //   request();
-  // }, []);
-
-  // useEffect(() => {
-  //   requestFirstRecipes('meals');
-  // }, []);
+  const requestCategories = async (type) => {
+    const NUMBER_FIVE = 5;
+    const api = await fiveCategories(type);
+    setCategories(api.slice(0, NUMBER_FIVE));
+  };
 
   const initialValue = {
     recipes,
     requestFirstRecipes,
     setRecipes,
     request,
+    categories,
+    setCategories,
+    requestCategories,
   };
 
   return (

@@ -4,9 +4,10 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Recipes from '../components/Recipes';
 import appContext from '../context/Context';
+import ButtonsCategory from '../components/ButtonsCategory';
 
 function Foods({ history }) {
-  const { recipes, requestFirstRecipes } = useContext(appContext);
+  const { recipes, requestFirstRecipes, requestCategories } = useContext(appContext);
 
   useEffect(() => {
     if (recipes.length === 1) {
@@ -20,13 +21,16 @@ function Foods({ history }) {
   useEffect(() => {
     if (ref.current) {
       requestFirstRecipes('meals');
+      requestCategories('meals');
       ref.current = false;
     }
-  }, [requestFirstRecipes]);
+  }, [requestFirstRecipes, requestCategories]);
 
   return (
     <div>
       <Header title="Foods" condition history={ history } />
+      <ButtonsCategory />
+
       <h1 data-testid="foods-test">
         Recipes
       </h1>
