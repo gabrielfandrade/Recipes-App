@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { recipeDetail } from '../service/recipesApi';
+import DrinkCard from '../components/DrinkCard';
+import FoodCard from '../components/FoodCard';
 
 function RecipeDetails({ history, match: { params } }) {
   const [detailRecipe, setDetailRecipe] = useState({});
@@ -22,11 +24,24 @@ function RecipeDetails({ history, match: { params } }) {
     }
   }, [history.location.pathname, params]);
 
-  console.log(detailRecipe);
+  const detailsCard = () => {
+    const pathDrink = history.location.pathname.includes('drink');
+    if (pathDrink) {
+      return (
+        <DrinkCard details={ detailRecipe[0] } />
+      );
+    }
+    return (
+      <FoodCard details={ detailRecipe[0] } />
+    );
+  };
 
   return (
     <div>
-      { params.id }
+      {
+        detailRecipe.length > 0
+        && detailsCard()
+      }
     </div>
   );
 }

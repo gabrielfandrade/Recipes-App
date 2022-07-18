@@ -6,6 +6,8 @@ import { getRecipesApi, firstRecipes, fiveCategories } from '../service/recipesA
 function Provider({ children }) {
   const [recipes, setRecipes] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [redirect, setRedirect] = useState(false);
+  const [oldRecipes, setOldRecipes] = useState([]);
 
   const request = async (type, filter, inputSearch) => {
     const api = await getRecipesApi(type, filter, inputSearch);
@@ -13,6 +15,11 @@ function Provider({ children }) {
       global.alert('Sorry, we haven\'t found any recipes for these filters.');
     } else {
       setRecipes(api);
+      if (api.length === 1) {
+        setRedirect(true);
+      } else {
+        setRedirect(false);
+      }
     }
   };
 
@@ -35,6 +42,9 @@ function Provider({ children }) {
     categories,
     setCategories,
     requestCategories,
+    redirect,
+    oldRecipes,
+    setOldRecipes,
   };
 
   return (

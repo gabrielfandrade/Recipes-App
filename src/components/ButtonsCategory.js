@@ -1,14 +1,40 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
+import PropTypes from 'prop-types';
 import appContext from '../context/Context';
+import { filterByCategory } from '../service/recipesApi';
 
 function ButtonsCategory({ history }) {
-  const { categories } = useContext(appContext);
+  const [filter, setFilter] = useState('');
+  const { categories,
+    setRecipes, requestFirstRecipes } = useContext(appContext);
 
-  const handleClick = (categoryName) => {
-    if (history.location.pathname === '/foods') {
-      return filterByCategory('meals', categoryName);
-    } return filterByCategory('drinks', categoryName);
+  const handleClick = async (categoryName) => {
+    if (categoryName === filter) {
+      if (history.location.pathname === '/foods') {
+        requestFirstRecipes('meals');
+      } else {
+        requestFirstRecipes('drinks');
+      }
+    } else {
+      if (history.location.pathname === '/foods') {
+        const filterFoods = await filterByCategory('meals', categoryName);
+        setRecipes(filterFoods);
+      } else {
+        const filterDrinks = await filterByCategory('drinks', categoryName);
+        setRecipes(filterDrinks);
+      }
+      setFilter(categoryName);
+    }
   };
+
+  const handleClick2 = () => {
+    if (history.location.pathname === '/foods') {
+      requestFirstRecipes('meals');
+    } else {
+      requestFirstRecipes('drinks');
+    }
+  };
+
   return (
     <div>
       {
@@ -23,13 +49,19 @@ function ButtonsCategory({ history }) {
           </button>
         ))
       }
+      <button
+        type="button"
+        data-testid="All-category-filter"
+        onClick={ () => handleClick2() }
+      >
+        All
+      </button>
+
     </div>
   );
 }
 
 ButtonsCategory.propTypes = {
-    title: PropTypes.string.isRequired,
-    condition: PropTypes.bool.isRequired,
-    history: PropTypes.shape().isRequired,
-  };
+  history: PropTypes.shape().isRequired,
+};
 export default ButtonsCategory;

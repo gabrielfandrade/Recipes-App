@@ -7,14 +7,15 @@ import appContext from '../context/Context';
 import ButtonsCategory from '../components/ButtonsCategory';
 
 function Foods({ history }) {
-  const { recipes, requestFirstRecipes, requestCategories } = useContext(appContext);
+  const {
+    recipes, requestFirstRecipes, requestCategories, redirect } = useContext(appContext);
 
   useEffect(() => {
-    if (recipes.length === 1) {
+    if (redirect) {
       const { idMeal } = recipes[0];
       history.push(`/foods/${idMeal}`);
     }
-  }, [recipes, history]);
+  }, [redirect, recipes, history]);
 
   const ref = useRef(true);
 
@@ -29,7 +30,7 @@ function Foods({ history }) {
   return (
     <div>
       <Header title="Foods" condition history={ history } />
-      <ButtonsCategory />
+      <ButtonsCategory history={ history } />
 
       <h1 data-testid="foods-test">
         Recipes
