@@ -1,18 +1,23 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Context from './Context';
-import recipesApi from '../service/recipesApi';
+import { getRecipesApi, firstRecipes } from '../service/recipesApi';
 
 function Provider({ children }) {
   const [recipes, setRecipes] = useState([]);
 
   const request = async (type, filter, inputSearch) => {
-    const api = await recipesApi(type, filter, inputSearch);
+    const api = await getRecipesApi(type, filter, inputSearch);
     if (!api) {
       global.alert('Sorry, we haven\'t found any recipes for these filters.');
     } else {
       setRecipes(api);
     }
+  };
+
+  const requestFirstRecipes = async (type) => {
+    const api = await firstRecipes(type);
+    setRecipes(api);
   };
 
   // useEffect(() => {
@@ -23,8 +28,14 @@ function Provider({ children }) {
   //   request();
   // }, []);
 
+  // useEffect(() => {
+  //   requestFirstRecipes('meals');
+  // }, []);
+
   const initialValue = {
     recipes,
+    requestFirstRecipes,
+    setRecipes,
     request,
   };
 

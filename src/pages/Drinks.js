@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext, useRef } from 'react';
 import PropTypes from 'prop-types';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -6,7 +6,16 @@ import appContext from '../context/Context';
 import Recipes from '../components/Recipes';
 
 function Drinks({ history }) {
-  const { recipes } = useContext(appContext);
+  const { recipes, requestFirstRecipes } = useContext(appContext);
+
+  const ref = useRef(true);
+
+  useEffect(() => {
+    if (ref.current) {
+      requestFirstRecipes('drinks');
+      ref.current = false;
+    }
+  }, [requestFirstRecipes]);
 
   useEffect(() => {
     if (recipes.length === 1) {

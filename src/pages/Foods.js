@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext, useRef } from 'react';
 import PropTypes from 'prop-types';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -6,7 +6,7 @@ import Recipes from '../components/Recipes';
 import appContext from '../context/Context';
 
 function Foods({ history }) {
-  const { recipes } = useContext(appContext);
+  const { recipes, requestFirstRecipes } = useContext(appContext);
 
   useEffect(() => {
     if (recipes.length === 1) {
@@ -14,6 +14,15 @@ function Foods({ history }) {
       history.push(`/foods/${idMeal}`);
     }
   }, [recipes, history]);
+
+  const ref = useRef(true);
+
+  useEffect(() => {
+    if (ref.current) {
+      requestFirstRecipes('meals');
+      ref.current = false;
+    }
+  }, [requestFirstRecipes]);
 
   return (
     <div>
