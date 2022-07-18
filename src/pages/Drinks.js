@@ -37,6 +37,7 @@ function Drinks({ history }) {
             return (
               <Recipes
                 key={ index }
+                url={ `/drinks/${recipe.idDrink}` }
                 name={ recipe.strDrink }
                 img={ recipe.strDrinkThumb }
                 index={ index }
