@@ -1,23 +1,37 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext, useRef } from 'react';
 import PropTypes from 'prop-types';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Recipes from '../components/Recipes';
 import appContext from '../context/Context';
+import ButtonsCategory from '../components/ButtonsCategory';
 
 function Foods({ history }) {
-  const { recipes } = useContext(appContext);
+  const {
+    recipes, requestFirstRecipes, requestCategories, redirect } = useContext(appContext);
 
   useEffect(() => {
-    if (recipes.length === 1) {
+    if (redirect) {
       const { idMeal } = recipes[0];
       history.push(`/foods/${idMeal}`);
     }
-  }, [recipes, history]);
+  }, [redirect, recipes, history]);
+
+  const ref = useRef(true);
+
+  useEffect(() => {
+    if (ref.current) {
+      requestFirstRecipes('meals');
+      requestCategories('meals');
+      ref.current = false;
+    }
+  }, [requestFirstRecipes, requestCategories]);
 
   return (
     <div>
       <Header title="Foods" condition history={ history } />
+      <ButtonsCategory history={ history } />
+
       <h1 data-testid="foods-test">
         Recipes
       </h1>
@@ -28,6 +42,7 @@ function Foods({ history }) {
             return (
               <Recipes
                 key={ index }
+                url={ `/foods/${recipe.idMeal}` }
                 name={ recipe.strMeal }
                 img={ recipe.strMealThumb }
                 index={ index }
