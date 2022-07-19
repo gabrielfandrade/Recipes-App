@@ -8,6 +8,7 @@ import RecipeDetails from './pages/RecipeDetails';
 import Profile from './pages/Profile';
 import DoneRecipes from './pages/DoneRecipes';
 import FavoriteRecipes from './pages/FavoriteRecipes';
+import RecipeInProgress from './pages/RecipeInProgress';
 // import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
@@ -20,7 +21,9 @@ function App() {
       <Route exact path="/done-recipes" component={ DoneRecipes } />
       <Route exact path="/favorite-recipes" component={ FavoriteRecipes } />
       <Route exact path="/foods/:id" component={ RecipeDetails } />
+      <Route exact path="/foods/:id/in-progress" component={ RecipeInProgress } />
       <Route exact path="/drinks/:id" component={ RecipeDetails } />
+      <Route exact path="/drinks/:id/in-progress" component={ RecipeInProgress } />
     </Switch>
   );
 }
