@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import OtherRecipesDrinks from './OtherRecipesDrinks';
 import ButtonsFavShare from './ButtonsFavShare';
@@ -6,6 +6,8 @@ import ButtonsFavShare from './ButtonsFavShare';
 function FoodCard({ details, page }) {
   const [ingredients, setIngredients] = useState([]);
   const [checked, setChecked] = useState();
+
+  const ref = useRef(false);
 
   useEffect(() => {
     const entries = Object.entries(details);
@@ -21,12 +23,26 @@ function FoodCard({ details, page }) {
     setIngredients(notNull);
   }, [details]);
 
+  useEffect(() => {
+    if (ref.current) {
+      const storage = JSON.parse(localStorage.getItem('inProgressRecipes'));
+      const used = ingredients.reduce((list, ingredient) => {
+        if (checked[ingredient[0]]) return [...list, ingredient[1]];
+        return list;
+      }, []);
+      storage.meals[details.idMeal] = used;
+      localStorage.setItem('inProgressRecipes', JSON.stringify(storage));
+      ref.current = false;
+    }
+  }, [checked, details.idMeal, ingredients]);
+
   const handleChange = ({ target }) => {
     const { id } = target;
     setChecked((prev) => ({
       ...prev,
       [id]: !prev[id],
     }));
+    ref.current = true;
   };
 
   const ingredientsList = () => {

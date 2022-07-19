@@ -82,12 +82,11 @@
   display: flex;
   justify-content: center;
   position: fixed;
-  /* width: 100%; */
 }
 
 .recommendations {
   background: green;
   display: flex;
-  width: 190px;
   overflow-x: scroll;
+  width: 190px;
 }

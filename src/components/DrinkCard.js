@@ -105,6 +105,7 @@ DrinkCard.propTypes = {
     strInstructions: PropTypes.string.isRequired,
     idDrink: PropTypes.string.isRequired,
   }).isRequired,
+  page: PropTypes.string.isRequired,
 };
 
 export default DrinkCard;
