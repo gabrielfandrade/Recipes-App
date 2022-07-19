@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import OtherRecipes from './OtherRecipes';
+import ButtonsFavShare from './ButtonsFavShare';
 
 function FoodCard({ details }) {
   const [ingredients, setIngredients] = useState([]);
@@ -23,6 +24,7 @@ function FoodCard({ details }) {
       <h2 data-testid="recipe-title">
         { details.strMeal }
       </h2>
+      <ButtonsFavShare />
       <p data-testid="recipe-category">
         { details.strCategory }
       </p>

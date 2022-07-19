@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import OtherRecipes from './OtherRecipes';
+import ButtonsFavShare from './ButtonsFavShare';
 
 function DrinkCard({ details }) {
   const [ingredients, setIngredients] = useState([]);
@@ -25,6 +26,7 @@ function DrinkCard({ details }) {
       >
         { details.strDrink }
       </h2>
+      <ButtonsFavShare />
       <p
         data-testid="recipe-category"
       >
