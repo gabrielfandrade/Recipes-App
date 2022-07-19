@@ -8,7 +8,8 @@ import ButtonsCategory from '../components/ButtonsCategory';
 
 function Foods({ history }) {
   const {
-    recipes, requestFirstRecipes, requestCategories, redirect } = useContext(appContext);
+    recipes, requestFirstRecipes, requestCategories, redirect,
+    requestRecommendations } = useContext(appContext);
 
   useEffect(() => {
     if (redirect) {
@@ -23,9 +24,10 @@ function Foods({ history }) {
     if (ref.current) {
       requestFirstRecipes('meals');
       requestCategories('meals');
+      requestRecommendations('drinks');
       ref.current = false;
     }
-  }, [requestFirstRecipes, requestCategories]);
+  }, [requestFirstRecipes, requestCategories, requestRecommendations]);
 
   return (
     <div>
@@ -36,7 +38,8 @@ function Foods({ history }) {
         Recipes
       </h1>
       {
-        recipes.map((recipe, index) => {
+        recipes
+        && recipes.map((recipe, index) => {
           const limit = 11;
           if (index <= limit) {
             return (

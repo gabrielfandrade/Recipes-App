@@ -38,11 +38,12 @@ function ButtonsCategory({ history }) {
   return (
     <div>
       {
-        categories.map((category) => (
+        categories.length > 0
+        && categories.map((category, index) => (
           <button
             data-testid={ `${category.strCategory}-category-filter` }
             type="button"
-            key={ category.strCategory }
+            key={ index }
             onClick={ () => handleClick(category.strCategory) }
           >
             { category.strCategory}

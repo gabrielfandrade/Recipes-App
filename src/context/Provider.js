@@ -8,6 +8,7 @@ function Provider({ children }) {
   const [categories, setCategories] = useState([]);
   const [redirect, setRedirect] = useState(false);
   const [oldRecipes, setOldRecipes] = useState([]);
+  const [recommendation, setRecommendation] = useState([]);
 
   const request = async (type, filter, inputSearch) => {
     const api = await getRecipesApi(type, filter, inputSearch);
@@ -28,6 +29,12 @@ function Provider({ children }) {
     setRecipes(api);
   };
 
+  const requestRecommendations = async (type) => {
+    const NUMBER_SIX = 6;
+    const api = await firstRecipes(type);
+    setRecommendation(api.slice(0, NUMBER_SIX));
+  };
+
   const requestCategories = async (type) => {
     const NUMBER_FIVE = 5;
     const api = await fiveCategories(type);
@@ -45,6 +52,9 @@ function Provider({ children }) {
     redirect,
     oldRecipes,
     setOldRecipes,
+    recommendation,
+    setRecommendation,
+    requestRecommendations,
   };
 
   return (
