@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import OtherRecipes from './OtherRecipes';
+import OtherRecipesFoods from './OtherRecipesFoods';
 
 function DrinkCard({ details }) {
   const [ingredients, setIngredients] = useState([]);
@@ -43,7 +43,7 @@ function DrinkCard({ details }) {
       <p data-testid="instructions">
         { details.strInstructions }
       </p>
-      <OtherRecipes />
+      <OtherRecipesFoods />
     </div>
   );
 }

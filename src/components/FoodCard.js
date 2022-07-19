@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import OtherRecipes from './OtherRecipes';
+import OtherRecipesDrinks from './OtherRecipesDrinks';
 
 function FoodCard({ details }) {
   const [ingredients, setIngredients] = useState([]);
@@ -52,7 +52,7 @@ function FoodCard({ details }) {
         {}
       </iframe>
 
-      <OtherRecipes />
+      <OtherRecipesDrinks />
 
     </div>
   );

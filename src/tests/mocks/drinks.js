@@ -1,5 +1,4 @@
-const drinks = {
-  'drinks': [
+const drinks = [
     {
       'idDrink': '15997',
       'strDrink': 'GG',
@@ -1375,7 +1374,6 @@ const drinks = {
       'strCreativeCommonsConfirmed': 'No',
       'dateModified': '2017-09-08 16:55:14'
     }
-  ],
-};
+  ];
 
 module.exports = drinks;
