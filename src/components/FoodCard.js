@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import OtherRecipes from './OtherRecipes';
+import OtherRecipesDrinks from './OtherRecipesDrinks';
 import ButtonsFavShare from './ButtonsFavShare';
 
 function FoodCard({ details }) {
@@ -54,7 +54,7 @@ function FoodCard({ details }) {
         {}
       </iframe>
 
-      <OtherRecipes />
+      <OtherRecipesDrinks />
 
     </div>
   );

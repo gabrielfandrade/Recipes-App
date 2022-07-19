@@ -8,8 +8,7 @@ import ButtonsCategory from '../components/ButtonsCategory';
 
 function Drinks({ history }) {
   const { redirect,
-    recipes, requestFirstRecipes, requestCategories,
-    requestRecommendations } = useContext(appContext);
+    recipes, requestFirstRecipes, requestCategories } = useContext(appContext);
 
   const ref = useRef(true);
 
@@ -17,10 +16,9 @@ function Drinks({ history }) {
     if (ref.current) {
       requestFirstRecipes('drinks');
       requestCategories('drinks');
-      requestRecommendations('meals');
       ref.current = false;
     }
-  }, [requestFirstRecipes, requestCategories, requestRecommendations]);
+  }, [requestFirstRecipes, requestCategories]);
 
   useEffect(() => {
     if (redirect) {
