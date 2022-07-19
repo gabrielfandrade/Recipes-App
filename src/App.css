@@ -75,3 +75,12 @@
   position: fixed;
   width: 100%;
 }
+
+.btn-start-recipe {
+  align-items: center;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  position: fixed;
+  /* width: 100%; */
+}

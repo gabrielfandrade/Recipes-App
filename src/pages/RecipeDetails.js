@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { recipeDetail } from '../service/recipesApi';
 import DrinkCard from '../components/DrinkCard';
 import FoodCard from '../components/FoodCard';
+import ButtonStartRecipe from '../components/ButtonStartRecipe';
 
 function RecipeDetails({ history, match: { params } }) {
   const [detailRecipe, setDetailRecipe] = useState({});
@@ -28,11 +29,17 @@ function RecipeDetails({ history, match: { params } }) {
     const pathDrink = history.location.pathname.includes('drink');
     if (pathDrink) {
       return (
-        <DrinkCard details={ detailRecipe[0] } />
+        <div>
+          <DrinkCard details={ detailRecipe[0] } />
+          <ButtonStartRecipe />
+        </div>
       );
     }
     return (
-      <FoodCard details={ detailRecipe[0] } />
+      <div>
+        <FoodCard details={ detailRecipe[0] } />
+        <ButtonStartRecipe />
+      </div>
     );
   };
 
