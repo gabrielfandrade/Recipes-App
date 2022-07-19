@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import OtherRecipes from './OtherRecipes';
 
 function FoodCard({ details }) {
   const [ingredients, setIngredients] = useState([]);
@@ -7,11 +8,9 @@ function FoodCard({ details }) {
   useEffect(() => {
     const entries = Object.entries(details);
     const ingredient = entries.filter((entry) => entry[0].includes('strIngredient'));
-    const notNull = ingredient.filter((item) => item[1] !== '');
+    const notNull = ingredient.filter((item) => item[1] !== '' && item[1] !== null);
     setIngredients(notNull);
   }, [details]);
-
-  console.log();
 
   return (
     <div>
@@ -31,9 +30,8 @@ function FoodCard({ details }) {
         {
           ingredients.map((ingredient, index) => (
             <li key={ index } data-testid={ `${index}-ingredient-name-and-measure` }>
-              {
-                details[ingredient[0]]
-              }
+              { details[ingredient[0]] }
+              { details[`strMeasure${index + 1}`] }
             </li>
           ))
         }
@@ -42,22 +40,19 @@ function FoodCard({ details }) {
         { details.strInstructions}
       </p>
 
-      <p data-testid="video">VIDEO</p>
-
-      {/* <video
+      <iframe
+        src={ details.strYoutube.replace('watch?v=', 'embed/') }
+        width="560"
+        height="315"
+        frameBorder="0"
+        allowFullScreen
+        title="video"
         data-testid="video"
-        width="750"
-        height="500"
-        controls
       >
-        <track
-          default
-          kind="captions"
-          srcLang="en"
-          src="/media/examples/friday.vtt"
-        />
-        { details}
-      </video> */}
+        {}
+      </iframe>
+
+      <OtherRecipes />
 
     </div>
   );
@@ -69,6 +64,7 @@ FoodCard.propTypes = {
     strMeal: PropTypes.string.isRequired,
     strCategory: PropTypes.string.isRequired,
     strInstructions: PropTypes.string.isRequired,
+    strYoutube: PropTypes.string.isRequired,
   }).isRequired,
 };
 

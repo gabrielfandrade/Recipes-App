@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import OtherRecipes from './OtherRecipes';
 
 function DrinkCard({ details }) {
   const [ingredients, setIngredients] = useState([]);
@@ -7,7 +8,7 @@ function DrinkCard({ details }) {
   useEffect(() => {
     const entries = Object.entries(details);
     const ingredient = entries.filter((entry) => entry[0].includes('strIngredient'));
-    const notNull = ingredient.filter((item) => item[1] !== null);
+    const notNull = ingredient.filter((item) => item[1] !== '' && item[1] !== null);
     setIngredients(notNull);
   }, [details]);
 
@@ -27,15 +28,14 @@ function DrinkCard({ details }) {
       <p
         data-testid="recipe-category"
       >
-        { details.strCategory }
+        { details.strAlcoholic }
       </p>
       <ul>
         {
           ingredients.map((ingredient, index) => (
             <li key={ index } data-testid={ `${index}-ingredient-name-and-measure` }>
-              {
-                details[ingredient[0]]
-              }
+              { details[ingredient[0]] }
+              { details[`strMeasure${index + 1}`] }
             </li>
           ))
         }
@@ -43,6 +43,7 @@ function DrinkCard({ details }) {
       <p data-testid="instructions">
         { details.strInstructions }
       </p>
+      <OtherRecipes />
     </div>
   );
 }
@@ -51,7 +52,7 @@ DrinkCard.propTypes = {
   details: PropTypes.shape({
     strDrinkThumb: PropTypes.string.isRequired,
     strDrink: PropTypes.string.isRequired,
-    strCategory: PropTypes.string.isRequired,
+    strAlcoholic: PropTypes.string.isRequired,
     strInstructions: PropTypes.string.isRequired,
   }).isRequired,
 };
