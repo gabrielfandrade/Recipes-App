@@ -25,8 +25,11 @@ function RecipeDetails({ history, match: { params } }) {
     }
   }, [history.location.pathname, params]);
 
+  // console.log(detailRecipe);
+
   const detailsCard = () => {
     const pathDrink = history.location.pathname.includes('drink');
+
     if (pathDrink) {
       return (
         <div>

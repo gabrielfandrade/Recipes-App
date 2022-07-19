@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import OtherRecipes from './OtherRecipes';
+import ButtonsFavShare from './ButtonsFavShare';
 
 function DrinkCard({ details }) {
   const [ingredients, setIngredients] = useState([]);
@@ -11,6 +12,8 @@ function DrinkCard({ details }) {
     const notNull = ingredient.filter((item) => item[1] !== '' && item[1] !== null);
     setIngredients(notNull);
   }, [details]);
+
+  console.log(details);
 
   return (
     <div>
@@ -25,6 +28,9 @@ function DrinkCard({ details }) {
       >
         { details.strDrink }
       </h2>
+      <ButtonsFavShare
+        copyUrl={ `localhost:3000/drinks/${details.idDrink}` }
+      />
       <p
         data-testid="recipe-category"
       >
@@ -54,6 +60,7 @@ DrinkCard.propTypes = {
     strDrink: PropTypes.string.isRequired,
     strAlcoholic: PropTypes.string.isRequired,
     strInstructions: PropTypes.string.isRequired,
+    idDrink: PropTypes.string.isRequired,
   }).isRequired,
 };
 

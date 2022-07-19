@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import OtherRecipes from './OtherRecipes';
+import ButtonsFavShare from './ButtonsFavShare';
 
 function FoodCard({ details }) {
   const [ingredients, setIngredients] = useState([]);
@@ -23,6 +24,7 @@ function FoodCard({ details }) {
       <h2 data-testid="recipe-title">
         { details.strMeal }
       </h2>
+      <ButtonsFavShare copyUrl={ `localhost:3000/foods/${details.idMeal}` } />
       <p data-testid="recipe-category">
         { details.strCategory }
       </p>
@@ -65,6 +67,7 @@ FoodCard.propTypes = {
     strCategory: PropTypes.string.isRequired,
     strInstructions: PropTypes.string.isRequired,
     strYoutube: PropTypes.string.isRequired,
+    idMeal: PropTypes.string.isRequired,
   }).isRequired,
 };
 
