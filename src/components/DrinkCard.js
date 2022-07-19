@@ -13,6 +13,8 @@ function DrinkCard({ details }) {
     setIngredients(notNull);
   }, [details]);
 
+  console.log(details);
+
   return (
     <div>
       <img
@@ -26,7 +28,9 @@ function DrinkCard({ details }) {
       >
         { details.strDrink }
       </h2>
-      <ButtonsFavShare />
+      <ButtonsFavShare
+        copyUrl={ `localhost:3000/drinks/${details.idDrink}` }
+      />
       <p
         data-testid="recipe-category"
       >
@@ -56,6 +60,7 @@ DrinkCard.propTypes = {
     strDrink: PropTypes.string.isRequired,
     strAlcoholic: PropTypes.string.isRequired,
     strInstructions: PropTypes.string.isRequired,
+    idDrink: PropTypes.string.isRequired,
   }).isRequired,
 };
 
