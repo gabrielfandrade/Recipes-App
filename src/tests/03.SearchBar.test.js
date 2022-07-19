@@ -5,37 +5,47 @@ import renderWithRouter from './mocks/renderWithRouter';
 import App from '../App';
 import meals from './mocks/meals';
 import drinks from './mocks/drinks';
+import categories from './mocks/mockCategories';
 import * as recipesApi from '../service/recipesApi';
 import { act } from 'react-dom/test-utils';
 
-const mockWithMeals = () => {
-  jest.spyOn(global, 'fetch')
-    .mockImplementation(async () => Promise.resolve({
-      status: 200,
-      ok: true,
-      json: () => Promise.resolve(meals),
-    }));
+const mockFirstRecipes = () => {
+  jest.spyOn(recipesApi, 'firstRecipes')
+    .mockImplementation((type) => {
+      if (type === 'meals') {
+        return meals;
+      } else {
+        return drinks;
+      }
+    })
 }
-
-const mockWithDrinks = () => {
-  jest.spyOn(global, 'fetch')
-    .mockImplementation(async () => Promise.resolve({
-      status: 200,
-      ok: true,
-      json: () => Promise.resolve(drinks),
-    }));
+const mockCategories = () => {
+  jest.spyOn(recipesApi, 'fiveCategories')
+    .mockImplementation(async () => Promise.resolve(categories))
 }
-
-const mockWithoutRecipes = () => {
-  jest.spyOn(global, 'fetch')
-    .mockImplementation(async () => Promise.resolve({
-      status: 200,
-      ok: true,
-      json: () => Promise.resolve({ meals: null }),
-    }));
+const mockSearch = () => {
+  jest.spyOn(recipesApi, 'getRecipesApi')
+    .mockImplementation((type, filter, inputSearch) => {
+      if (inputSearch === 'abcdef') {
+        return null;
+      } else if (filter === 's' && inputSearch === 'Corba') {
+        return [meals[0]];
+      } else if (type === 'meals') {
+        return meals;
+      } else if (filter === 'i' && inputSearch === 'Apple') {
+        return [drinks[0]];
+      } else {
+        return drinks;
+      } 
+    })
 }
 
 describe('Testes do componente SearchBar', () => {
+  beforeEach(() => {
+    mockFirstRecipes();
+    mockCategories();
+    mockSearch();
+  });
   afterEach(() => jest.clearAllMocks());
 
   it('Verifica se possui os elementos na tela, e se a requisição é realizada na página de Foods', async () => {
@@ -43,15 +53,16 @@ describe('Testes do componente SearchBar', () => {
       renderWithRouter(<App />)
     });
 
-    mockWithMeals();
-
     const inputEmail = screen.getByTestId('email-input');
     const inputPassword = screen.getByTestId('password-input');
     const buttonEnter = screen.getByTestId('login-submit-btn');
 
     userEvent.type(inputEmail, 'teste@teste.com');
     userEvent.type(inputPassword, '1234567');
-    userEvent.click(buttonEnter);
+    
+    await act(async () => {
+      userEvent.click(buttonEnter);
+    });
 
     const btnFilter = screen.getByTestId('search-top-btn');
     
@@ -80,8 +91,6 @@ describe('Testes do componente SearchBar', () => {
   })
 
   it('Verifica se o alerta é renderizado na tela', async () => {
-    mockWithMeals();
-
     await act(async () => {
       renderWithRouter(<App />)
     });
@@ -111,17 +120,10 @@ describe('Testes do componente SearchBar', () => {
       userEvent.click(btnSearch);
     })
 
-    expect(global.alert).toHaveBeenCalledTimes(1);
-    const radioName = screen.getByTestId('name-search-radio')
+    expect(global.alert).toHaveBeenCalledTimes(1);    
   })
 
   it('Verifica se possui os elementos na tela, e se a requisição é realizada na página de Drink', async () => {
-    const mockFirstRecipes = () => {
-      await jest.spyOn(recipesApi, 'firstRecipes').mockReturnValue(drinks);
-    }
-
-    mockFirstRecipes();
-
     await act(async () => {
       renderWithRouter(<App />)
     });
@@ -134,10 +136,12 @@ describe('Testes do componente SearchBar', () => {
     userEvent.type(inputPassword, '1234567');
     userEvent.click(buttonEnter);
 
-    const drinks = screen.getByTestId('drinks-bottom-btn');
-    expect(drinks).toBeInTheDocument();
+    const drinksPage = screen.getByTestId('drinks-bottom-btn');
+    expect(drinksPage).toBeInTheDocument();
 
-    userEvent.click(drinks);
+    await act(async () => {
+      userEvent.click(drinksPage);
+    });
 
     const btnFilter = screen.getByTestId('search-top-btn');
     
@@ -156,20 +160,16 @@ describe('Testes do componente SearchBar', () => {
       userEvent.click(btnSearch);
     })
 
-    const recipe1 = screen.getByTestId('0-card-img')
-    expect(recipe1).toBeInTheDocument()
-
-    mockFirst.mockRestore();
+    const recipeName = screen.getByTestId('0-card-name');
+    expect(recipeName).toHaveTextContent('GG');
   })
 
-  it.skip('Verifica se um alert é chamado ao não encontrar nenhum Drink', async () => {
+  it('Verifica se um alert é chamado ao não encontrar nenhum Drink', async () => {
     const mockAlertText = "Sorry, we haven't found any recipes for these filters.";
 
     await act(async () => {
       renderWithRouter(<App />)
     });
-
-    mockWithoutRecipes();
 
     const inputEmail = screen.getByTestId('email-input');
     const inputPassword = screen.getByTestId('password-input');
@@ -190,6 +190,8 @@ describe('Testes do componente SearchBar', () => {
     userEvent.type(input, 'abcdef');
     userEvent.click(radio);
 
+    global.alert = jest.fn();
+
     await act(async () => {
       userEvent.click(btnSearch);
     })
@@ -198,24 +200,7 @@ describe('Testes do componente SearchBar', () => {
     expect(global.alert).toHaveBeenCalledWith(mockAlertText);
   })
 
-  it.skip('Verifica se é redirecionada para a pagina RecipeDetails', async () => {
-    const mock = () => {
-      jest.spyOn(global, 'fetch')
-        .mockImplementation(async () => Promise.resolve({
-          status: 200,
-          ok: true,
-          json: () => Promise.resolve({drinks: [
-            {
-            "strDrink": "Apple Berry Smoothie",
-            "strDrinkThumb": "https://www.thecocktaildb.com/images/media/drink/xwqvur1468876473.jpg",
-            "idDrink": "12710"
-            }
-            ]}),
-        }));
-    }
-
-    mock();
-
+  it('Verifica se é redirecionada para a pagina RecipeDetails', async () => {
     await act(async () => {
       renderWithRouter(<App />)
     });
@@ -252,8 +237,36 @@ describe('Testes do componente SearchBar', () => {
     await act(async () => {
       userEvent.click(btnSearch);
     })
+  })
 
-    const detailsPage = screen.getByText(/recipe details/i);
-    expect(detailsPage).toBeInTheDocument(); 
+  it('Verifica se é redirecionada para a pagina RecipeDetails', async () => {
+    await act(async () => {
+      renderWithRouter(<App />)
+    });
+
+    const inputEmail = screen.getByTestId('email-input');
+    const inputPassword = screen.getByTestId('password-input');
+    const buttonEnter = screen.getByTestId('login-submit-btn');
+
+    userEvent.type(inputEmail, 'teste@teste.com');
+    userEvent.type(inputPassword, '1234567');
+    userEvent.click(buttonEnter);
+
+    const btnFilter = screen.getByTestId('search-top-btn');
+    
+    userEvent.click(btnFilter);
+
+    const input = screen.getByTestId('search-input');
+
+    const radio = screen.getByTestId('name-search-radio');
+
+    const btnSearch = screen.getByTestId('exec-search-btn'); 
+
+    userEvent.type(input, 'Corba');
+    userEvent.click(radio);
+
+    await act(async () => {
+      userEvent.click(btnSearch);
+    })
   })
 })
