@@ -4,9 +4,8 @@ import { recipeDetail } from '../service/recipesApi';
 import DrinkCard from '../components/DrinkCard';
 import FoodCard from '../components/FoodCard';
 import appContext from '../context/Context';
-import ButtonStartRecipe from '../components/ButtonStartRecipe';
 
-function RecipeDetails({ history, match: { params } }) {
+function RecipeInProgress({ history, match: { params } }) {
   const { requestRecommendations } = useContext(appContext);
   const [detailRecipe, setDetailRecipe] = useState({});
 
@@ -34,15 +33,15 @@ function RecipeDetails({ history, match: { params } }) {
     if (pathDrink) {
       return (
         <div>
-          <DrinkCard details={ detailRecipe[0] } page="details" />
-          <ButtonStartRecipe type="drinks" id={ detailRecipe[0].idDrink } />
+          <DrinkCard details={ detailRecipe[0] } page="progress" />
+          <button type="button" data-testid="finish-recipe-btn">?</button>
         </div>
       );
     }
     return (
       <div>
-        <FoodCard details={ detailRecipe[0] } page="details" />
-        <ButtonStartRecipe type="foods" id={ detailRecipe[0].idMeal } />
+        <FoodCard details={ detailRecipe[0] } page="progress" />
+        <button type="button" data-testid="finish-recipe-btn">?</button>
       </div>
     );
   };
@@ -57,7 +56,7 @@ function RecipeDetails({ history, match: { params } }) {
   );
 }
 
-RecipeDetails.propTypes = {
+RecipeInProgress.propTypes = {
   history: PropTypes.shape({
     location: PropTypes.shape({
       pathname: PropTypes.string.isRequired,
@@ -70,4 +69,4 @@ RecipeDetails.propTypes = {
   }).isRequired,
 };
 
-export default RecipeDetails;
+export default RecipeInProgress;
