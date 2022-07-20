@@ -28,7 +28,7 @@ function ButtonFinishRecipe({ checked, details, history }) {
       name: details.strMeal || details.strDrink,
       image: details.strMealThumb || details.strDrinkThumb,
       doneDate: `${dd}/${mm}/${yyyy}`,
-      tags: details.strTags,
+      tags: details.strTags || '',
     };
     storage = [...storage, finishedRecipe];
     localStorage.setItem('doneRecipes', JSON.stringify(storage));

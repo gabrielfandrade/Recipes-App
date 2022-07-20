@@ -34,14 +34,14 @@ function RecipeDetails({ history, match: { params } }) {
     if (pathDrink) {
       return (
         <div>
-          <DrinkCard details={ detailRecipe[0] } page="details" />
+          <DrinkCard details={ detailRecipe[0] } page="details" history={ history } />
           <ButtonStartRecipe type="drinks" id={ detailRecipe[0].idDrink } />
         </div>
       );
     }
     return (
       <div>
-        <FoodCard details={ detailRecipe[0] } page="details" />
+        <FoodCard details={ detailRecipe[0] } page="details" history={ history } />
         <ButtonStartRecipe type="foods" id={ detailRecipe[0].idMeal } />
       </div>
     );

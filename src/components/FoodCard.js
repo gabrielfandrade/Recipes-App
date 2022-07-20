@@ -23,9 +23,10 @@ function FoodCard({ details, page, history }) {
         cocktails: {},
       };
     }
-    if (Object.keys(storage.meals).includes(details.idMeal)) {
+    const { meals } = localStorage;
+    if (Object.keys(meals).includes(details.idMeal)) {
       ingredientsList.forEach((ingredient) => {
-        if (storage.meals[details.idMeal].includes(ingredient[1])) {
+        if (meals[details.idMeal].includes(ingredient[1])) {
           setChecked((prev) => ({
             ...prev,
             [ingredient[0]]: true,
@@ -49,19 +50,20 @@ function FoodCard({ details, page, history }) {
 
   useEffect(() => {
     if (ref.current) {
-      let storage = JSON.parse(localStorage.getItem('inProgressRecipes'));
-      if (!storage) {
-        storage = {
-          meals: {},
-          cocktails: {},
-        };
-      }
-      const used = ingredients.reduce((list, ingredient) => {
-        if (checked[ingredient[0]]) return [...list, ingredient[1]];
-        return list;
-      }, []);
-      storage.meals[details.idMeal] = used;
-      localStorage.setItem('inProgressRecipes', JSON.stringify(storage));
+      // let storage = JSON.parse(localStorage.getItem('inProgressRecipes'));
+      // if (!storage) {
+      //   storage = {
+      //     meals: {},
+      //     cocktails: {},
+      //   };
+      // }
+      // const used = ingredients.reduce((list, ingredient) => {
+      //   if (checked[ingredient[0]]) return [...list, ingredient[1]];
+      //   return list;
+      // }, []);
+      // const { meals } = localStorage;
+      // storage.meals[details.idMeal] = used;
+      // localStorage.setItem('inProgressRecipes', JSON.stringify(storage));
       ref.current = false;
     }
   }, [checked, details.idMeal, ingredients]);
