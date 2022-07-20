@@ -11,21 +11,50 @@ function FoodCard({ details, page }) {
 
   useEffect(() => {
     const entries = Object.entries(details);
-    const keys = Object.keys(details);
-    const keysIngredient = keys.filter((key) => key.includes('strIngredient'));
-    const keysObject = keysIngredient.reduce((objects, key) => {
-      objects[key] = false;
-      return objects;
-    }, {});
-    setChecked(keysObject);
-    const ingredient = entries.filter((entry) => entry[0].includes('strIngredient'));
-    const notNull = ingredient.filter((item) => item[1] !== '' && item[1] !== null);
-    setIngredients(notNull);
+    const strIngredients = entries.filter((entry) => entry[0].includes('strIngredient'));
+    const ingredientsList = strIngredients.filter(
+      (item) => item[1] !== '' && item[1] !== null,
+    );
+    let storage = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    if (!storage) {
+      storage = {
+        meals: {},
+        cocktails: {},
+      };
+    }
+    if (Object.keys(storage.meals).includes(details.idMeal)) {
+      ingredientsList.forEach((ingredient) => {
+        if (storage.meals[details.idMeal].includes(ingredient[1])) {
+          setChecked((prev) => ({
+            ...prev,
+            [ingredient[0]]: true,
+          }));
+        } else {
+          setChecked((prev) => ({
+            ...prev,
+            [ingredient[0]]: false,
+          }));
+        }
+      });
+    } else {
+      const keys = ingredientsList.reduce((objects, ingredient) => {
+        objects[ingredient[0]] = false;
+        return objects;
+      }, {});
+      setChecked(keys);
+    }
+    setIngredients(ingredientsList);
   }, [details]);
 
   useEffect(() => {
     if (ref.current) {
-      const storage = JSON.parse(localStorage.getItem('inProgressRecipes'));
+      let storage = JSON.parse(localStorage.getItem('inProgressRecipes'));
+      if (!storage) {
+        storage = {
+          meals: {},
+          cocktails: {},
+        };
+      }
       const used = ingredients.reduce((list, ingredient) => {
         if (checked[ingredient[0]]) return [...list, ingredient[1]];
         return list;
