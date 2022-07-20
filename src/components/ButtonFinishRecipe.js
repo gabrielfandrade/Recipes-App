@@ -7,6 +7,24 @@ function ButtonFinishRecipe({ checked }) {
     return checkedList.every((check) => check);
   };
 
+  // const submitRecipe = () => {
+  //   let storage = JSON.parse(localStorage.getItem('doneRecipes'));
+  //   if (!storage) {
+  //     storage = [];
+  //   }
+  //   const finishedRecipe = {
+  //     id: ,
+  //     type: ,
+  //     nationality: ,
+  //     category: ,
+  //     alcoholicOrNot: ,
+  //     name: ,
+  //     image: ,
+  //     doneDate: ,
+  //     tags: ,
+  //   };
+  // };
+
   return (
     <div>
       <button
@@ -24,6 +42,7 @@ function ButtonFinishRecipe({ checked }) {
 
 ButtonFinishRecipe.propTypes = {
   checked: PropTypes.shape().isRequired,
+  // details: PropTypes.shape().isRequired,
 };
 
 export default ButtonFinishRecipe;
