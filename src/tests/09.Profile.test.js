@@ -17,7 +17,6 @@ describe('Testa tela de perfil', () => {
     userEvent.click(buttonEnter);
 
     history.push('/profile');
-    console.log(history.location.pathname);
   });
 
  it('Deve renderizar o perfil', () => {

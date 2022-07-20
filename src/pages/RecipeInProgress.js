@@ -33,13 +33,13 @@ function RecipeInProgress({ history, match: { params } }) {
     if (pathDrink) {
       return (
         <div>
-          <DrinkCard details={ detailRecipe[0] } page="progress" />
+          <DrinkCard details={ detailRecipe[0] } page="progress" history={ history } />
         </div>
       );
     }
     return (
       <div>
-        <FoodCard details={ detailRecipe[0] } page="progress" />
+        <FoodCard details={ detailRecipe[0] } page="progress" history={ history } />
       </div>
     );
   };

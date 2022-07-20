@@ -1,18 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import copy from 'clipboard-copy';
+import React /* , { useState, useEffect } */ from 'react';
+import PropTypes from 'prop-types';
 import Header from '../components/Header';
-import shareIcon from '../images/shareIcon.svg';
+import DoneRecipesCard from '../components/DoneRecipesCard';
 
-function DoneRecipes() {
-  const [doneCards, setDoneCards] = useState([]);
-
-  useEffect(() => {
-    setDoneCards([]);
-  }, []);
-
+function DoneRecipes({ history }) {
   return (
     <div data-testid="Done-Recipes-test">
-      <Header title="Done Recipes" condition={ false } />
+      <Header title="Done Recipes" condition={ false } history={ history } />
 
       <div>
         <button type="button" data-testid="filter-by-all-btn">All</button>
@@ -20,52 +14,14 @@ function DoneRecipes() {
         <button type="button" data-testid="filter-by-drink-btn">Drinks</button>
       </div>
 
-      <div>
-        {
-          doneCards.map((card, index) => (
-            <div key={ index }>
-
-              <img
-                scr={ `${done[card[0]]}` }
-                alt="card-recipes-done"
-                width="150px"
-                data-testid={ `${index}-horizontal-image` }
-              />
-
-              <p data-testid={ `${index}-horizontal-top-text` }>
-                { `${done[card[0]]}` }
-              </p>
-
-              <p data-testid={ `${index}-horizontal-name` }>
-                { `${done[card[0]]}` }
-              </p>
-
-              <p data-testid={ `${index}-horizontal-done-date` }>
-                DATA
-              </p>
-
-              <button
-                type="button"
-                data-testid={ `${index}-horizontal-share-btn` }
-                onClick={ () => copy(copyUrl) }
-              >
-                <img
-                  src={ shareIcon }
-                  alt="share-url"
-                />
-              </button>
-
-              <p data-testid={ `${index}-${tagName}-horizontal-tag` }>
-                { `${done[card[0]]}` }
-              </p>
-
-            </div>
-          ))
-        }
-      </div>
+      <DoneRecipesCard />
 
     </div>
   );
 }
+
+DoneRecipes.propTypes = {
+  history: PropTypes.shape().isRequired,
+};
 
 export default DoneRecipes;

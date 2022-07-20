@@ -4,7 +4,7 @@ import OtherRecipesDrinks from './OtherRecipesDrinks';
 import ButtonsFavShare from './ButtonsFavShare';
 import ButtonFinishRecipe from './ButtonFinishRecipe';
 
-function FoodCard({ details, page }) {
+function FoodCard({ details, page, history }) {
   const [ingredients, setIngredients] = useState([]);
   const [checked, setChecked] = useState();
 
@@ -23,9 +23,10 @@ function FoodCard({ details, page }) {
         cocktails: {},
       };
     }
-    if (Object.keys(storage.meals).includes(details.idMeal)) {
+    const { meals } = storage;
+    if (Object.keys(meals).includes(details.idMeal)) {
       ingredientsList.forEach((ingredient) => {
-        if (storage.meals[details.idMeal].includes(ingredient[1])) {
+        if (meals[details.idMeal].includes(ingredient[1])) {
           setChecked((prev) => ({
             ...prev,
             [ingredient[0]]: true,
@@ -89,7 +90,8 @@ function FoodCard({ details, page }) {
           }
         </ul>
       );
-    } return (
+    }
+    return (
       <div>
         {
           ingredients.map((ingredient, index) => (
@@ -153,7 +155,11 @@ function FoodCard({ details, page }) {
       }
       {
         page === 'progress' && checked
-        && <ButtonFinishRecipe checked={ checked } />
+        && <ButtonFinishRecipe
+          checked={ checked }
+          details={ details }
+          history={ history }
+        />
       }
 
     </div>
@@ -170,6 +176,11 @@ FoodCard.propTypes = {
     idMeal: PropTypes.string.isRequired,
   }).isRequired,
   page: PropTypes.string.isRequired,
+  history: PropTypes.shape({
+    location: PropTypes.shape({
+      pathname: PropTypes.string.isRequired,
+    }),
+  }).isRequired,
 };
 
 export default FoodCard;
