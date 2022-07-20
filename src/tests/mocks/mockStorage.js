@@ -1,5 +1,23 @@
-const mockStorage = {
+class LocalStorageMock {
+  constructor() {
+    this.store = {};
+  }
 
-};
+  clear() {
+    this.store = {};
+  }
 
-module.exports = mockStorage;
+  getItem(key) {
+    return this.store[key] || null;
+  }
+
+  setItem(key, value) {
+    this.store[key] = String(value);
+  }
+
+  removeItem(key) {
+    delete this.store[key];
+  }
+}
+
+export default LocalStorageMock

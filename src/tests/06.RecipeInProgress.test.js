@@ -4,7 +4,7 @@ import userEvent from '@testing-library/user-event';
 import renderWithRouter from './mocks/renderWithRouter';
 import App from '../App';
 import fetch from './mocks/fetchs';
-import mockStorage from './mocks/mockStorage';
+import LocalStorageMock from './mocks/mockStorage';
 import { act } from 'react-dom/test-utils';
 
 const mock = () => {
@@ -12,27 +12,18 @@ const mock = () => {
     .mockImplementation(fetch)
 }
 
-const mockSet = () => {
-  jest.spyOn(global.Storage.prototype, 'setItem')
-    .mockImplementation((key, value) => {
-      mockStorage[key] = value
-    })
-}
-
-const mockGet = () => {
-  jest.spyOn(global.Storage.prototype, 'getItem')
-    .mockImplementation((key) => mockStorage[key])
-}
+const mockProgress = 
+  {"meals":{"52977":["Lentils"]},"cocktails":{"15997":["Galliano","Ginger ale","Ice"],"178319":["Hpnotiq"]}}
 
 describe('Testes da tela "RecipeInProgress"', () => {
   beforeEach(() => {
     mock();
-    mockSet();
-    mockGet();
   })
   afterEach(() => jest.clearAllMocks());
 
   it('Verifica se uma checkbox mantém seu estado ao recarregar', async () => {
+    global.localStorage = new LocalStorageMock;
+
     const { history } = renderWithRouter(<App />);
     await act(async () => {
       history.push('/foods/52977/in-progress');
@@ -56,9 +47,32 @@ describe('Testes da tela "RecipeInProgress"', () => {
       name: /lentils \- 1 cup/i
     });   
     expect(checkbox.checked).toBeTruthy();
+    
+    localStorage.clear();
+  })
+
+  it('Verifica se uma checkbox mantém seu estado ao recarregar', async () => {
+    global.localStorage = new LocalStorageMock;
+    localStorage.setItem('inProgressRecipes', JSON.stringify(mockProgress));
+
+    const { history } = renderWithRouter(<App />);
+    await act(async () => {
+      history.push('/foods/52977/in-progress');
+    })
+
+    const checkbox1 = screen.getByRole('checkbox', {
+      name: /lentils \- 1 cup/i
+    });
+    expect(checkbox1).toBeInTheDocument();
+
+    expect(checkbox1.checked).toBeTruthy();
+    
+    localStorage.clear();
   })
 
   it('Verifica tela de Receita em Progresso de Drinks', async () => {
+    global.localStorage = new LocalStorageMock;
+
     const { history } = renderWithRouter(<App />);  
     await act(async () => {
       history.push('/drinks/178319/in-progress');
@@ -82,5 +96,26 @@ describe('Testes da tela "RecipeInProgress"', () => {
       name: /hpnotiq \- 2 oz/i
     })  
     expect(checkbox.checked).toBeTruthy();
+
+    localStorage.clear();
+  })
+
+  it('Verifica tela de Receita continua Progresso de Drinks ', async () => {
+    global.localStorage = new LocalStorageMock;
+    localStorage.setItem('inProgressRecipes', JSON.stringify(mockProgress));
+
+    const { history } = renderWithRouter(<App />);  
+    await act(async () => {
+      history.push('/drinks/178319/in-progress');
+    })
+
+    const checkbox1 = screen.getByRole('checkbox', {
+      name: /hpnotiq \- 2 oz/i
+    })
+    expect(checkbox1).toBeInTheDocument();
+
+    expect(checkbox1.checked).toBeTruthy();
+
+    localStorage.clear();
   })
 });
