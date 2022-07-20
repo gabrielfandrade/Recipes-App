@@ -4,7 +4,7 @@ import OtherRecipesFoods from './OtherRecipesFoods';
 import ButtonsFavShare from './ButtonsFavShare';
 import ButtonFinishRecipe from './ButtonFinishRecipe';
 
-function DrinkCard({ details, page }) {
+function DrinkCard({ details, page, history }) {
   const [ingredients, setIngredients] = useState([]);
   const [checked, setChecked] = useState();
 
@@ -141,7 +141,11 @@ function DrinkCard({ details, page }) {
       }
       {
         page === 'progress' && checked
-        && <ButtonFinishRecipe checked={ checked } />
+        && <ButtonFinishRecipe
+          checked={ checked }
+          details={ details }
+          history={ history }
+        />
       }
     </div>
   );
@@ -156,6 +160,11 @@ DrinkCard.propTypes = {
     idDrink: PropTypes.string.isRequired,
   }).isRequired,
   page: PropTypes.string.isRequired,
+  history: PropTypes.shape({
+    location: PropTypes.shape({
+      pathname: PropTypes.string.isRequired,
+    }),
+  }).isRequired,
 };
 
 export default DrinkCard;
