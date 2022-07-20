@@ -23,7 +23,7 @@ function FoodCard({ details, page, history }) {
         cocktails: {},
       };
     }
-    const { meals } = localStorage;
+    const { meals } = storage;
     if (Object.keys(meals).includes(details.idMeal)) {
       ingredientsList.forEach((ingredient) => {
         if (meals[details.idMeal].includes(ingredient[1])) {
@@ -90,7 +90,8 @@ function FoodCard({ details, page, history }) {
           }
         </ul>
       );
-    } return (
+    }
+    return (
       <div>
         {
           ingredients.map((ingredient, index) => (

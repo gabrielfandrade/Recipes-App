@@ -1,56 +1,83 @@
-import React /* , { useState, useEffect } */ from 'react';
+import React, { useState, useEffect } from 'react';
 // import PropTypes from 'prop-types';
-// import copy from 'clipboard-copy';
-// import shareIcon from '../images/shareIcon.svg';
+import copy from 'clipboard-copy';
+import shareIcon from '../images/shareIcon.svg';
 
 function DoneRecipesCard() {
-  // const [doneCards, setDoneCards] = useState([]);
+  const [doneCards, setDoneCards] = useState([]);
 
-  // useEffect(() => {
-  //   let storageDoneCard = JSON.parse(localStorage.getItem('doneRecipes'));
-  //   if (!storageDoneCard) {
-  //     storageDoneCard = {
-  //       alcoholicOrNot: '',
-  //       category: '',
-  //       doneDate: '',
-  //       id: '',
-  //       image: '',
-  //       name: '',
-  //       nationality: '',
-  //       tags: '',
-  //       type: '',
-  //     };
-  //   }
-  //   const finishedRecipe = {
-  //     id: storageDoneCard[0].id,
-  //     type: storageDoneCard[0].type,
-  //     nationality: storageDoneCard[0].nationality,
-  //     category: storageDoneCard[0].category,
-  //     alcoholicOrNot: storageDoneCard[0].alcoholicOrNot,
-  //     name: storageDoneCard[0].name,
-  //     image: storageDoneCard[0].image,
-  //     doneDate: storageDoneCard[0].doneDate,
-  //     tags: storageDoneCard[0].tags,
-  //   };
-  //   setDoneCards(finishedRecipe);
-  // }, [setDoneCards]);
+  useEffect(() => {
+    let storageDoneCard = JSON.parse(localStorage.getItem('doneRecipes'));
+    if (!storageDoneCard) {
+      storageDoneCard = {
+        alcoholicOrNot: '',
+        category: '',
+        doneDate: '',
+        id: '',
+        image: '',
+        name: '',
+        nationality: '',
+        tags: '',
+        type: '',
+      };
+    }
+    setDoneCards(storageDoneCard);
+  }, [setDoneCards]);
 
-  // console.log(doneCards);
+  // console.log(doneCards[0]);
+  // const limit = 3;
 
   return (
     <div>
-      {/* {
+      {
         doneCards.map((card, index) => (
-          <div key={ index }>
+          <div key={ card.name }>
             <img
-              scr={ card.image[0] }
+              src={ card.image }
               alt="card-recipes-done"
-              width="150px"
+              width="100px"
               data-testid={ `${index}-horizontal-image` }
             />
+
+            <p data-testid={ `${index}-horizontal-top-text` }>
+              { card.category }
+            </p>
+
+            <p data-testid={ `${index}-horizontal-name` }>
+              { card.name }
+            </p>
+
+            <p data-testid={ `${index}-horizontal-done-date` }>
+              { card.doneDate }
+            </p>
+
+            <button
+              type="button"
+              data-testid={ `${index}-horizontal-share-btn` }
+              onClick={ () => copy(copyUrl) }
+            >
+              <img
+                src={ shareIcon }
+                alt="share-url"
+              />
+            </button>
+
+            { card.tags.map((tag, idx) => {
+              if (idx < 2) {
+                return (
+                  <div key={ idx }>
+                    <p data-testid={ `${idx}-${tag}-horizontal-tag` }>
+                      { tag }
+                    </p>
+                  </div>
+                );
+              }
+              return null;
+            })}
+
           </div>
         ))
-      } */}
+      }
     </div>
   );
 }

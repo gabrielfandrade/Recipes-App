@@ -3,21 +3,20 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 function ButtonStartRecipe({ type, id }) {
-  const test = localStorage.getItem('inProgressRecipes');
-  const getID = JSON.parse(test);
-  let typeID = '';
-  if (type === 'foods') {
-    typeID = 'meals';
-  } else {
-    typeID = 'cocktails';
-  }
-  const obj = getID[typeID][id];
+  // const buttonText = () => {
+  //   const test = localStorage.getItem('inProgressRecipes');
+  //   const getID = JSON.parse(test);
+  //   if (type2 === 'meals') {
+  //     return getID.type2.includes(id) ? 'Continue Recipe' : 'Start Recipe';
+  //   }
+  //   return getID.type2.includes(id) ? 'Continue Recipe' : 'Start Recipe';
+  // };
   return (
     <div>
       <Link to={ `/${type}/${id}/in-progress` }>
         <p data-testid="start-recipe-btn" className="btn-start-recipe">
-          { obj ? 'Continue Recipe' : 'Start recipe' }
-          {/* Start Recipe */}
+          {/* { buttonText() } */}
+          Start Recipe
         </p>
       </Link>
     </div>
@@ -26,6 +25,7 @@ function ButtonStartRecipe({ type, id }) {
 
 ButtonStartRecipe.propTypes = {
   type: PropTypes.string.isRequired,
+  // type2: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
 };
 

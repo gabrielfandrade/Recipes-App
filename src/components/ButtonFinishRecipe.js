@@ -19,6 +19,8 @@ function ButtonFinishRecipe({ checked, details, history }) {
     const mm = String(today.getMonth() + 1).padStart(2, '0');
     const yyyy = today.getFullYear();
 
+    const tags = details.strTags || '';
+
     const finishedRecipe = {
       id: details.idMeal || details.idDrink,
       type,
@@ -28,7 +30,7 @@ function ButtonFinishRecipe({ checked, details, history }) {
       name: details.strMeal || details.strDrink,
       image: details.strMealThumb || details.strDrinkThumb,
       doneDate: `${dd}/${mm}/${yyyy}`,
-      tags: details.strTags || '',
+      tags: tags.split(',') || [],
     };
     storage = [...storage, finishedRecipe];
     localStorage.setItem('doneRecipes', JSON.stringify(storage));
