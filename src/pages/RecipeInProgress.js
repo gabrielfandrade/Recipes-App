@@ -34,14 +34,12 @@ function RecipeInProgress({ history, match: { params } }) {
       return (
         <div>
           <DrinkCard details={ detailRecipe[0] } page="progress" />
-          <button type="button" data-testid="finish-recipe-btn">?</button>
         </div>
       );
     }
     return (
       <div>
         <FoodCard details={ detailRecipe[0] } page="progress" />
-        <button type="button" data-testid="finish-recipe-btn">?</button>
       </div>
     );
   };

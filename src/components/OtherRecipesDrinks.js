@@ -4,7 +4,6 @@ import '../App.css';
 
 function OtherRecipesDrinks() {
   const { recommendation } = useContext(appContext);
-  console.log('ALO');
   return (
     <div
       className="recommendations"

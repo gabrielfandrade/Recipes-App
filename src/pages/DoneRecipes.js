@@ -1,10 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import copy from 'clipboard-copy';
 import Header from '../components/Header';
 import shareIcon from '../images/shareIcon.svg';
 
-function DoneRecipes({ done }) {
+function DoneRecipes() {
   const [doneCards, setDoneCards] = useState([]);
+
+  useEffect(() => {
+    setDoneCards([]);
+  }, []);
 
   return (
     <div data-testid="Done-Recipes-test">
