@@ -76,7 +76,7 @@
   width: 100%;
 }
 
-.btn-start-recipe {
+.btn-start-recipe, .btn-finish-recipe {
   align-items: center;
   bottom: 0;
   display: flex;

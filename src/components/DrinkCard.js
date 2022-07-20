@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import OtherRecipesFoods from './OtherRecipesFoods';
 import ButtonsFavShare from './ButtonsFavShare';
+import ButtonFinishRecipe from './ButtonFinishRecipe';
 
 function DrinkCard({ details, page }) {
   const [ingredients, setIngredients] = useState([]);
@@ -137,6 +138,10 @@ function DrinkCard({ details, page }) {
       {
         page === 'details'
         && <OtherRecipesFoods />
+      }
+      {
+        page === 'progress' && checked
+        && <ButtonFinishRecipe checked={ checked } />
       }
     </div>
   );
