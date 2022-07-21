@@ -37,7 +37,6 @@ function RecipeDetails({ history, match: { params } }) {
           <DrinkCard details={ detailRecipe[0] } page="details" history={ history } />
           <ButtonStartRecipe
             type="drinks"
-            type2="cocktails"
             id={ detailRecipe[0].idDrink }
           />
         </div>
@@ -46,7 +45,7 @@ function RecipeDetails({ history, match: { params } }) {
     return (
       <div>
         <FoodCard details={ detailRecipe[0] } page="details" history={ history } />
-        <ButtonStartRecipe type="foods" type2="meals" id={ detailRecipe[0].idMeal } />
+        <ButtonStartRecipe type="foods" id={ detailRecipe[0].idMeal } />
       </div>
     );
   };
