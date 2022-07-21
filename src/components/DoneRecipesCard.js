@@ -25,7 +25,16 @@ function DoneRecipesCard() {
   }, [setDoneCards]);
 
   // console.log(doneCards[0]);
-  // const limit = 3;
+
+  // const getTag = (tags) => {
+  //   const filterTag = tags.filter((_filter, index) => index < 2);
+  //   const tagsString = filterTag.join(' - ');
+  //   return (
+  //     <div data-testid={ `${idx}-${tag}-horizontal-tag` }>
+  //       { tagsString }
+  //     </div>
+  //   );
+  // };
 
   return (
     <div>
@@ -40,7 +49,7 @@ function DoneRecipesCard() {
             />
 
             <p data-testid={ `${index}-horizontal-top-text` }>
-              { card.category }
+              { `${card.nationality} - ${card.category} - ${card.alcoholicOrNot}` }
             </p>
 
             <p data-testid={ `${index}-horizontal-name` }>
@@ -53,27 +62,30 @@ function DoneRecipesCard() {
 
             <button
               type="button"
-              data-testid={ `${index}-horizontal-share-btn` }
               onClick={ () => copy(copyUrl) }
             >
               <img
+                data-testid={ `${index}-horizontal-share-btn` }
                 src={ shareIcon }
                 alt="share-url"
               />
             </button>
 
-            { card.tags.map((tag, idx) => {
-              if (idx < 2) {
-                return (
-                  <div key={ idx }>
-                    <p data-testid={ `${idx}-${tag}-horizontal-tag` }>
-                      { tag }
-                    </p>
-                  </div>
-                );
-              }
-              return null;
-            })}
+            {
+              // getTag(card.tags)
+              card.tags.map((tag, idx) => {
+                if (idx < 2) {
+                  return (
+                    <div key={ idx }>
+                      <p data-testid={ `${index}-${tag}-horizontal-tag` }>
+                        { tag }
+                      </p>
+                    </div>
+                  );
+                }
+                return null;
+              })
+            }
 
           </div>
         ))
