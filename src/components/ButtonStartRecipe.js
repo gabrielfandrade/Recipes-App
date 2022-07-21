@@ -31,8 +31,6 @@ function ButtonStartRecipe({ type, id }) {
 
       <Link to={ `/${type}/${id}/in-progress` }>
         <p data-testid="start-recipe-btn" className="btn-start-recipe">
-          {/* { buttonText() } */}
-          {/* Start Recipe */}
           { isStarded ? 'Continue Recipe' : 'Start Recipe'}
         </p>
       </Link>
@@ -42,7 +40,6 @@ function ButtonStartRecipe({ type, id }) {
 
 ButtonStartRecipe.propTypes = {
   type: PropTypes.string.isRequired,
-  // type2: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
 };
 

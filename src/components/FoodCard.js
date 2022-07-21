@@ -123,7 +123,11 @@ function FoodCard({ details, page, history }) {
       <h2 data-testid="recipe-title">
         { details.strMeal }
       </h2>
-      <ButtonsFavShare copyUrl={ `localhost:3000/foods/${details.idMeal}` } />
+      <ButtonsFavShare
+        type="food"
+        details={ details }
+        copyUrl={ `localhost:3000/foods/${details.idMeal}` }
+      />
       <p data-testid="recipe-category">
         { details.strCategory }
       </p>
