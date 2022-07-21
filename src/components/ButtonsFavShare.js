@@ -17,15 +17,12 @@ function ButtonsFavShare({ copyUrl, details, type }) {
   }
   useEffect(() => {
     const typeID = type === 'food' ? details.idMeal : details.idDrink;
-    console.log(typeID);
-    console.log(favoriteRecipes);
     const fav = favoriteRecipes.some((item) => item.id === typeID);
-    console.log(fav);
     setIsFav(fav);
   }, [favoriteRecipes, details, type]);
 
-  const handleClick = () => {
-    const obj = {
+  function setFavotite() {
+    const objectForLocalStorage = {
       id: type === 'food' ? details.idMeal : details.idDrink,
       type,
       nationality: details.strArea ? details.strArea : '',
@@ -34,9 +31,21 @@ function ButtonsFavShare({ copyUrl, details, type }) {
       name: type === 'food' ? details.strMeal : details.strDrink,
       image: type === 'food' ? details.strMealThumb : details.strDrinkThumb,
     };
-    const arraynovo = [...favoriteRecipes, obj];
-    console.log(arraynovo);
-    localStorage.setItem('favoriteRecipes', JSON.stringify(arraynovo));
+    const setNewArray = [...favoriteRecipes, objectForLocalStorage];
+    console.log(setNewArray);
+    localStorage.setItem('favoriteRecipes', JSON.stringify(setNewArray));
+  }
+
+  const handleClick = () => {
+    if (!isFav) {
+      setFavotite();
+      setIsFav(true);
+    } else {
+      const typeID = type === 'food' ? details.idMeal : details.idDrink;
+      const newArray = favoriteRecipes.filter((item) => item.id !== typeID);
+      localStorage.setItem('favoriteRecipes', JSON.stringify(newArray));
+      setIsFav(false);
+    }
   };
 
   return (
