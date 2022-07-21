@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import copy from 'clipboard-copy';
 import shareIcon from '../images/shareIcon.svg';
 
-function DoneRecipesCard() {
+function DoneRecipesCard({ type }) {
   const [doneCards, setDoneCards] = useState([]);
 
   useEffect(() => {
@@ -21,39 +22,35 @@ function DoneRecipesCard() {
         type: '',
       };
     }
-    setDoneCards(storageDoneCard);
-  }, [setDoneCards]);
-
-  // console.log(doneCards[0]);
-
-  // const getTag = (tags) => {
-  //   const filterTag = tags.filter((_filter, index) => index < 2);
-  //   const tagsString = filterTag.join(' - ');
-  //   return (
-  //     <div data-testid={ `${idx}-${tag}-horizontal-tag` }>
-  //       { tagsString }
-  //     </div>
-  //   );
-  // };
+    if (type !== '') {
+      const filterType = storageDoneCard.filter((filter) => (
+        filter.type === type
+      ));
+      setDoneCards(filterType);
+    } else {
+      setDoneCards(storageDoneCard);
+    }
+  }, [setDoneCards, type]);
 
   return (
     <div>
       {
         doneCards.map((card, index) => (
           <div key={ card.name }>
-            <img
-              src={ card.image }
-              alt="card-recipes-done"
-              width="100px"
-              data-testid={ `${index}-horizontal-image` }
-            />
+            <Link to={ `/${card.type}s/${card.id}` }>
+              <img
+                src={ card.image }
+                alt="card-recipes-done"
+                width="100px"
+                data-testid={ `${index}-horizontal-image` }
+              />
+              <p data-testid={ `${index}-horizontal-name` }>
+                { card.name }
+              </p>
+            </Link>
 
             <p data-testid={ `${index}-horizontal-top-text` }>
               { `${card.nationality} - ${card.category} - ${card.alcoholicOrNot}` }
-            </p>
-
-            <p data-testid={ `${index}-horizontal-name` }>
-              { card.name }
             </p>
 
             <p data-testid={ `${index}-horizontal-done-date` }>
@@ -72,7 +69,6 @@ function DoneRecipesCard() {
             </button>
 
             {
-              // getTag(card.tags)
               card.tags.map((tag, idx) => {
                 if (idx < 2) {
                   return (
@@ -93,5 +89,9 @@ function DoneRecipesCard() {
     </div>
   );
 }
+
+DoneRecipesCard.propTypes = {
+  type: PropTypes.string.isRequired,
+};
 
 export default DoneRecipesCard;

@@ -1,20 +1,40 @@
-import React /* , { useState, useEffect } */ from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Header from '../components/Header';
 import DoneRecipesCard from '../components/DoneRecipesCard';
 
 function DoneRecipes({ history }) {
+  const [filterButtons, setFilterButtons] = useState('');
+
   return (
     <div data-testid="Done-Recipes-test">
       <Header title="Done Recipes" condition={ false } history={ history } />
 
       <div>
-        <button type="button" data-testid="filter-by-all-btn">All</button>
-        <button type="button" data-testid="filter-by-food-btn">Foods</button>
-        <button type="button" data-testid="filter-by-drink-btn">Drinks</button>
+        <button
+          type="button"
+          data-testid="filter-by-all-btn"
+          onClick={ () => setFilterButtons('') }
+        >
+          All
+        </button>
+        <button
+          type="button"
+          data-testid="filter-by-food-btn"
+          onClick={ () => setFilterButtons('food') }
+        >
+          Foods
+        </button>
+        <button
+          type="button"
+          data-testid="filter-by-drink-btn"
+          onClick={ () => setFilterButtons('drink') }
+        >
+          Drinks
+        </button>
       </div>
 
-      <DoneRecipesCard />
+      <DoneRecipesCard type={ filterButtons } />
 
     </div>
   );
