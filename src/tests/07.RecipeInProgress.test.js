@@ -8,12 +8,14 @@ import LocalStorageMock from './mocks/mockStorage';
 import { act } from 'react-dom/test-utils';
 
 const mock = () => {
-  jest.spyOn(global, 'fetch')
-    .mockImplementation(fetch)
+  jest.spyOn(global, 'fetch').mockImplementation(fetch)
 }
 
 const mockProgress = 
   {"meals":{"52977":["Lentils"]},"cocktails":{"15997":["Galliano","Ginger ale","Ice"],"178319":["Hpnotiq"]}}
+
+const mockDone =
+  [{"id":"15997","type":"drink","nationality":"","category":"Ordinary Drink","alcoholicOrNot":"Optional alcohol","name":"GG","image":"https://www.thecocktaildb.com/images/media/drink/vyxwut1468875960.jpg","doneDate":"20/07/2022","tags":[""]}]
 
 describe('Testes da tela "RecipeInProgress"', () => {
   beforeEach(() => {
@@ -21,8 +23,9 @@ describe('Testes da tela "RecipeInProgress"', () => {
   })
   afterEach(() => jest.clearAllMocks());
 
-  it('Verifica se uma checkbox mantém seu estado ao recarregar', async () => {
+  it('Verifica tela de Receita em Progresso de Foods', async () => {
     global.localStorage = new LocalStorageMock;
+    localStorage.setItem('doneRecipes', JSON.stringify(mockDone));
 
     const { history } = renderWithRouter(<App />);
     await act(async () => {
@@ -47,11 +50,24 @@ describe('Testes da tela "RecipeInProgress"', () => {
       name: /lentils \- 1 cup/i
     });   
     expect(checkbox.checked).toBeTruthy();
+
+    userEvent.click(checkbox);
+
+    const allCheckbox = screen.getAllByRole('checkbox');
+
+    const btnFinish = screen.getByTestId('finish-recipe-btn')
+    expect(btnFinish).toBeDisabled();
+
+    allCheckbox.forEach((check) => userEvent.click(check))
+
+    expect(btnFinish).not.toBeDisabled();
+
+    userEvent.click(btnFinish);
     
     localStorage.clear();
   })
 
-  it('Verifica se uma checkbox mantém seu estado ao recarregar', async () => {
+  it('Verifica tela de Receita continua Progresso de Foods', async () => {
     global.localStorage = new LocalStorageMock;
     localStorage.setItem('inProgressRecipes', JSON.stringify(mockProgress));
 
@@ -96,6 +112,25 @@ describe('Testes da tela "RecipeInProgress"', () => {
       name: /hpnotiq \- 2 oz/i
     })  
     expect(checkbox.checked).toBeTruthy();
+
+    const checkbox2 = screen.getByRole('checkbox', {
+      name: /pineapple juice \- 1 oz/i
+    });
+    const checkbox3 = screen.getByRole('checkbox', {
+      name: /banana liqueur \- 1 oz/i
+    });
+
+    const btnFinish = screen.getByTestId('finish-recipe-btn')
+    expect(btnFinish).toBeDisabled();
+
+    userEvent.click(checkbox2)
+    userEvent.click(checkbox3)
+
+    expect(btnFinish).not.toBeDisabled();
+
+    await act(async () => {
+      userEvent.click(btnFinish)
+    })
 
     localStorage.clear();
   })
