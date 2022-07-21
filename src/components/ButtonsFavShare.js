@@ -5,43 +5,53 @@ import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 
-function ButtonsFavShare({ copyUrl, details, type }) {
+function ButtonsFavShare({ copyUrl, details, type, testId = '', update = () => {} }) {
   const [isCopied, setIsCopied] = useState(false);
   const [isFav, setIsFav] = useState(false);
 
-  let favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
-  if (!favoriteRecipes) {
-    favoriteRecipes = [];
-  }
   useEffect(() => {
-    const typeID = type === 'food' ? details.idMeal : details.idDrink;
+    let favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    if (!favoriteRecipes) {
+      favoriteRecipes = [];
+    }
+    const typeID = details.idMeal || details.idDrink || details.id;
     const fav = favoriteRecipes.some((item) => item.id === typeID);
     setIsFav(fav);
-  }, [favoriteRecipes, details, type]);
+  }, [details, type]);
 
-  function setFavotite() {
+  function setFavorite() {
+    let favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    if (!favoriteRecipes) {
+      favoriteRecipes = [];
+    }
     const objectForLocalStorage = {
-      id: type === 'food' ? details.idMeal : details.idDrink,
+      id: details.idMeal || details.idDrink || details.id,
       type,
-      nationality: details.strArea ? details.strArea : '',
-      category: details.strCategory,
-      alcoholicOrNot: type === 'food' ? '' : details.strAlcoholic,
-      name: type === 'food' ? details.strMeal : details.strDrink,
-      image: type === 'food' ? details.strMealThumb : details.strDrinkThumb,
+      nationality: details.strArea || details.nationality || '',
+      category: details.strCategory || details.category || '',
+      alcoholicOrNot: details.strAlcoholic || details.alcoholicOrNot || '',
+      name: details.strMeal || details.strDrink || details.name,
+      image: details.strMealThumb || details.strDrinkThumb || details.image,
     };
     const setNewArray = [...favoriteRecipes, objectForLocalStorage];
     localStorage.setItem('favoriteRecipes', JSON.stringify(setNewArray));
+    update(setNewArray);
   }
 
   const handleClick = () => {
+    let favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    if (!favoriteRecipes) {
+      favoriteRecipes = [];
+    }
     if (!isFav) {
-      setFavotite();
+      setFavorite();
       setIsFav(true);
     } else {
-      const typeID = type === 'food' ? details.idMeal : details.idDrink;
+      const typeID = details.idMeal || details.idDrink || details.id;
       const newArray = favoriteRecipes.filter((item) => item.id !== typeID);
       localStorage.setItem('favoriteRecipes', JSON.stringify(newArray));
       setIsFav(false);
+      update(newArray);
     }
   };
 
@@ -55,11 +65,11 @@ function ButtonsFavShare({ copyUrl, details, type }) {
       >
         {
           isFav ? <img
-            data-testid="favorite-btn"
+            data-testid={ `${testId}favorite-btn` }
             alt="share-url"
             src={ blackHeartIcon }
           /> : <img
-            data-testid="favorite-btn"
+            data-testid={ `${testId}favorite-btn` }
             src={ whiteHeartIcon }
             alt="share-url"
           />
@@ -68,13 +78,13 @@ function ButtonsFavShare({ copyUrl, details, type }) {
 
       <button
         type="button"
-        data-testid="share-btn"
         onClick={ () => {
           copy(copyUrl);
           setIsCopied(true);
         } }
       >
         <img
+          data-testid={ `${testId}share-btn` }
           src={ shareIcon }
           alt="share-url"
         />
@@ -95,8 +105,16 @@ ButtonsFavShare.propTypes = {
     strArea: PropTypes.string.isRequired,
     idDrink: PropTypes.string.isRequired,
     strCategory: PropTypes.string.isRequired,
+    nationality: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
+    category: PropTypes.string.isRequired,
+    alcoholicOrNot: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    image: PropTypes.string.isRequired,
   }).isRequired,
   type: PropTypes.string.isRequired,
+  testId: PropTypes.string.isRequired,
+  update: PropTypes.func.isRequired,
 };
 
 export default ButtonsFavShare;
