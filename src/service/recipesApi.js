@@ -43,7 +43,6 @@ export const filterByCategory = async (type, category) => {
   const urlFood = `https://www.themealdb.com/api/json/v1/1/filter.php?c=${category}`;
   const urlDrink = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${category}`;
   const categoryType = (type === 'meals') ? urlFood : urlDrink;
-  console.log(categoryType);
   const response = await fetch(categoryType);
   const data = await response.json();
   return response.ok ? Promise.resolve(data[type]) : Promise.reject(data);
