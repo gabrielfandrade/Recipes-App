@@ -6,8 +6,6 @@ import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 
 function ButtonsFavShare({ copyUrl, details, type }) {
-  console.log(details);
-  console.log(copyUrl);
   const [isCopied, setIsCopied] = useState(false);
   const [isFav, setIsFav] = useState(false);
 
@@ -32,7 +30,6 @@ function ButtonsFavShare({ copyUrl, details, type }) {
       image: type === 'food' ? details.strMealThumb : details.strDrinkThumb,
     };
     const setNewArray = [...favoriteRecipes, objectForLocalStorage];
-    console.log(setNewArray);
     localStorage.setItem('favoriteRecipes', JSON.stringify(setNewArray));
   }
 
@@ -54,15 +51,15 @@ function ButtonsFavShare({ copyUrl, details, type }) {
       <button
         onClick={ handleClick }
         type="button"
-        data-testid="favorite-btn"
         alt="share-url"
-        src={ isFav ? blackHeartIcon : whiteHeartIcon }
       >
         {
           isFav ? <img
+            data-testid="favorite-btn"
             alt="share-url"
             src={ blackHeartIcon }
           /> : <img
+            data-testid="favorite-btn"
             src={ whiteHeartIcon }
             alt="share-url"
           />
@@ -73,7 +70,7 @@ function ButtonsFavShare({ copyUrl, details, type }) {
         type="button"
         data-testid="share-btn"
         onClick={ () => {
-          copy(`http://${copyUrl}`);
+          copy(copyUrl);
           setIsCopied(true);
         } }
       >

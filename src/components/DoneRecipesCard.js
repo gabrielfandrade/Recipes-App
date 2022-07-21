@@ -5,6 +5,7 @@ import copy from 'clipboard-copy';
 import shareIcon from '../images/shareIcon.svg';
 
 function DoneRecipesCard({ type }) {
+  const [isCopied, setIsCopied] = useState(false);
   const [doneCards, setDoneCards] = useState([]);
 
   useEffect(() => {
@@ -35,7 +36,8 @@ function DoneRecipesCard({ type }) {
   return (
     <div>
       {
-        doneCards.map((card, index) => (
+        doneCards.length > 0
+        && doneCards.map((card, index) => (
           <div key={ card.name }>
             <Link to={ `/${card.type}s/${card.id}` }>
               <img
@@ -57,9 +59,14 @@ function DoneRecipesCard({ type }) {
               { card.doneDate }
             </p>
 
+            { isCopied ? <p>Link copied!</p> : null }
+
             <button
               type="button"
-              onClick={ () => copy(copyUrl) }
+              onClick={ () => {
+                copy(`http://localhost:3000/${card.type}s/${card.id}`);
+                setIsCopied(true);
+              } }
             >
               <img
                 data-testid={ `${index}-horizontal-share-btn` }

@@ -126,7 +126,7 @@ function FoodCard({ details, page, history }) {
       <ButtonsFavShare
         type="food"
         details={ details }
-        copyUrl={ `localhost:3000/foods/${details.idMeal}` }
+        copyUrl={ `http://localhost:3000/foods/${details.idMeal}` }
       />
       <p data-testid="recipe-category">
         { details.strCategory }

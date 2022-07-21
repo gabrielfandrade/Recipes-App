@@ -126,7 +126,7 @@ function DrinkCard({ details, page, history }) {
       <ButtonsFavShare
         type="drink"
         details={ details }
-        copyUrl={ `localhost:3000/drinks/${details.idDrink}` }
+        copyUrl={ `http://localhost:3000/drinks/${details.idDrink}` }
       />
       <p
         data-testid="recipe-category"
