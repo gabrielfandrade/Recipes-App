@@ -1,22 +1,37 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 function ButtonStartRecipe({ type, id }) {
-  // const buttonText = () => {
-  //   const test = localStorage.getItem('inProgressRecipes');
-  //   const getID = JSON.parse(test);
-  //   if (type2 === 'meals') {
-  //     return getID.type2.includes(id) ? 'Continue Recipe' : 'Start Recipe';
-  //   }
-  //   return getID.type2.includes(id) ? 'Continue Recipe' : 'Start Recipe';
-  // };
+  const [isStarded, setIsStarted] = useState(false);
+
+  useEffect(() => {
+    let inProgressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    if (!inProgressRecipes) {
+      inProgressRecipes = {
+        meals: {},
+        cocktails: {},
+      };
+    }
+
+    if (type === 'foods') {
+      const findID = Object.keys(inProgressRecipes.meals).find((key) => key === id);
+      setIsStarted(findID);
+    }
+
+    if (type === 'drinks') {
+      const findID = Object.keys(inProgressRecipes.cocktails)
+        .find((key) => key === id);
+      setIsStarted(findID);
+    }
+  }, [setIsStarted, type, id]);
+
   return (
     <div>
+
       <Link to={ `/${type}/${id}/in-progress` }>
         <p data-testid="start-recipe-btn" className="btn-start-recipe">
-          {/* { buttonText() } */}
-          Start Recipe
+          { isStarded ? 'Continue Recipe' : 'Start Recipe'}
         </p>
       </Link>
     </div>
@@ -25,7 +40,6 @@ function ButtonStartRecipe({ type, id }) {
 
 ButtonStartRecipe.propTypes = {
   type: PropTypes.string.isRequired,
-  // type2: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
 };
 

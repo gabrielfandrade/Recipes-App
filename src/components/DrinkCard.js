@@ -124,6 +124,8 @@ function DrinkCard({ details, page, history }) {
         { details.strDrink }
       </h2>
       <ButtonsFavShare
+        type="drink"
+        details={ details }
         copyUrl={ `localhost:3000/drinks/${details.idDrink}` }
       />
       <p
