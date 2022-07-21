@@ -25,17 +25,16 @@ function ButtonsFavShare({ copyUrl, details, type, testId = '', update = () => {
       favoriteRecipes = [];
     }
     const objectForLocalStorage = {
-      id: details.idMeal || details.idDrink || details.id,
+      id: details.idMeal || details.idDrink,
       type,
-      nationality: details.strArea || details.nationality || '',
-      category: details.strCategory || details.category || '',
-      alcoholicOrNot: details.strAlcoholic || details.alcoholicOrNot || '',
-      name: details.strMeal || details.strDrink || details.name,
-      image: details.strMealThumb || details.strDrinkThumb || details.image,
+      nationality: details.strArea || '',
+      category: details.strCategory || '',
+      alcoholicOrNot: details.strAlcoholic || '',
+      name: details.strMeal || details.strDrink,
+      image: details.strMealThumb || details.strDrinkThumb,
     };
     const setNewArray = [...favoriteRecipes, objectForLocalStorage];
     localStorage.setItem('favoriteRecipes', JSON.stringify(setNewArray));
-    update(setNewArray);
   }
 
   const handleClick = () => {
