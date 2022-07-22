@@ -25,12 +25,12 @@ function ButtonFinishRecipe({ checked, details, history }) {
       id: details.idMeal || details.idDrink,
       type,
       nationality: details.strArea || '',
-      category: details.strCategory || '',
+      category: details.strCategory,
       alcoholicOrNot: details.strAlcoholic || '',
       name: details.strMeal || details.strDrink,
       image: details.strMealThumb || details.strDrinkThumb,
       doneDate: `${dd}/${mm}/${yyyy}`,
-      tags: tags.split(',') || [],
+      tags: tags.split(','),
     };
     storage = [...storage, finishedRecipe];
     localStorage.setItem('doneRecipes', JSON.stringify(storage));

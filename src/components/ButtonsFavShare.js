@@ -5,7 +5,7 @@ import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 
-function ButtonsFavShare({ copyUrl, details, type, testId = '', update = () => {} }) {
+function ButtonsFavShare({ copyUrl, details, type, testId, update }) {
   const [isCopied, setIsCopied] = useState(false);
   const [isFav, setIsFav] = useState(false);
 
@@ -20,15 +20,12 @@ function ButtonsFavShare({ copyUrl, details, type, testId = '', update = () => {
   }, [details, type]);
 
   function setFavorite() {
-    let favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
-    if (!favoriteRecipes) {
-      favoriteRecipes = [];
-    }
+    const favoriteRecipes = [];
     const objectForLocalStorage = {
       id: details.idMeal || details.idDrink,
       type,
       nationality: details.strArea || '',
-      category: details.strCategory || '',
+      category: details.strCategory,
       alcoholicOrNot: details.strAlcoholic || '',
       name: details.strMeal || details.strDrink,
       image: details.strMealThumb || details.strDrinkThumb,
@@ -95,21 +92,21 @@ function ButtonsFavShare({ copyUrl, details, type, testId = '', update = () => {
 ButtonsFavShare.propTypes = {
   copyUrl: PropTypes.string.isRequired,
   details: PropTypes.shape({
-    strDrinkThumb: PropTypes.string.isRequired,
-    strMealThumb: PropTypes.string.isRequired,
-    idMeal: PropTypes.string.isRequired,
-    strMeal: PropTypes.string.isRequired,
-    strDrink: PropTypes.string.isRequired,
-    strAlcoholic: PropTypes.string.isRequired,
-    strArea: PropTypes.string.isRequired,
-    idDrink: PropTypes.string.isRequired,
-    strCategory: PropTypes.string.isRequired,
-    nationality: PropTypes.string.isRequired,
-    id: PropTypes.string.isRequired,
-    category: PropTypes.string.isRequired,
-    alcoholicOrNot: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    image: PropTypes.string.isRequired,
+    strDrinkThumb: PropTypes.string,
+    strMealThumb: PropTypes.string,
+    idMeal: PropTypes.string,
+    strMeal: PropTypes.string,
+    strDrink: PropTypes.string,
+    strAlcoholic: PropTypes.string,
+    strArea: PropTypes.string,
+    idDrink: PropTypes.string,
+    strCategory: PropTypes.string,
+    nationality: PropTypes.string,
+    id: PropTypes.string,
+    category: PropTypes.string,
+    alcoholicOrNot: PropTypes.string,
+    name: PropTypes.string,
+    image: PropTypes.string,
   }).isRequired,
   type: PropTypes.string.isRequired,
   testId: PropTypes.string.isRequired,

@@ -14,6 +14,26 @@ const mock = () => {
 const mockProgress = 
   {"meals":{"52977":["Lentils"]},"cocktails":{"15997":["Galliano","Ginger ale","Ice"],"178319":["Hpnotiq"]}}
 
+const mockFavorite =
+  [
+    {
+      "id":"15997",
+      "type":"drink",
+      "nationality":"",
+      "category":"Ordinary Drink","alcoholicOrNot":"Optional alcohol",
+      "name":"GG",
+      "image":"https://www.thecocktaildb.com/images/media/drink/vyxwut1468875960.jpg",
+    },
+    {
+      "id":"52977",
+      "type":"food",
+      "nationality":"Turkish",
+      "category":"Side",
+      "alcoholicOrNot":"",
+      "name":"Corba",
+      "image":"https://www.themealdb.com/images/media/meals/58oia61564916529.jpg",
+    }
+  ]
 
 describe('Testes da tela "RecipeDetails"', () => {
   beforeEach(() => {
@@ -131,15 +151,46 @@ describe('Testes da tela "RecipeDetails"', () => {
     localStorage.clear();
   });
 
+  it('Testa continuar um Drink', async () => {
+    global.localStorage = new LocalStorageMock;
+    localStorage.setItem('inProgressRecipes', JSON.stringify(mockProgress));
+
+    const { history } = renderWithRouter(<App />);
+    await act(async () => {
+      history.push('/drinks/178319');
+    })
+
+    const btnStart = screen.getByTestId('start-recipe-btn');
+    expect(btnStart).toHaveTextContent(/Continue Recipe/i);
+
+    await act(async () => {
+      userEvent.click(btnStart);
+    })
+  })
+
   it('Testa o botão de compartilha', async () => {
+    // const mockFunction = () => {
+    //   jest.spyOn(window.document.execCommand, 'copy')
+    //     .mockImplementation(() => {})
+    // }
+    // mockFunction()
+    global.localStorage = new LocalStorageMock;
+    localStorage.setItem('favoriteRecipes', JSON.stringify(mockFavorite));
+
     const { history } = renderWithRouter(<App />);
     await act(async () => {
       history.push('/foods/52977');
     })
 
+    const btnFavorite = screen.getByTestId('favorite-btn');
+
+    userEvent.click(btnFavorite);
+
     const btnShare = screen.getByTestId('share-btn');
     expect(btnShare).toBeInTheDocument();
 
     userEvent.click(btnShare);
+
+    localStorage.clear();
   });
 })

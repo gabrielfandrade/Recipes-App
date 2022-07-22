@@ -127,6 +127,8 @@ function DrinkCard({ details, page, history }) {
         type="drink"
         details={ details }
         copyUrl={ `http://localhost:3000/drinks/${details.idDrink}` }
+        testId=""
+        update={ () => {} }
       />
       <p
         data-testid="recipe-category"

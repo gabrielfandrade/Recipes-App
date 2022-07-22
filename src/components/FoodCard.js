@@ -127,6 +127,8 @@ function FoodCard({ details, page, history }) {
         type="food"
         details={ details }
         copyUrl={ `http://localhost:3000/foods/${details.idMeal}` }
+        testId=""
+        update={ () => {} }
       />
       <p data-testid="recipe-category">
         { details.strCategory }

@@ -6,6 +6,10 @@ import mealCategories from './mealCategories';
 import beefMeals from './beefMeals';
 import ordinaryDrinks from './ordinaryDrinks';
 import drinkCategories from './drinkCategories';
+import appleMeals from './appleMeals';
+import appleDrink from './appleDrink';
+import emptyMeals from './emptyMeals';
+import corba from './corba';
 
 const fetch = (url) => Promise.resolve({
   status: 200,
@@ -34,6 +38,19 @@ const fetch = (url) => Promise.resolve({
     }
     if (url === 'https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=Ordinary Drink') {
       return Promise.resolve(ordinaryDrinks);
+    }
+    if (url === 'https://www.themealdb.com/api/json/v1/1/search.php?s=Apple') {
+      return Promise.resolve(appleMeals)
+    }
+    if (url === 'https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=Apple'
+      || url === 'https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=12710') {
+      return Promise.resolve(appleDrink)
+    }
+    if (url === 'https://www.themealdb.com/api/json/v1/1/search.php?s=abcdef') {
+      return Promise.resolve(emptyMeals)
+    }
+    if (url === 'https://www.themealdb.com/api/json/v1/1/search.php?s=Corba') {
+      return Promise.resolve(corba)
     }
   }
 });
