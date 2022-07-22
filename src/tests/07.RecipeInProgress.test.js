@@ -153,4 +153,23 @@ describe('Testes da tela "RecipeInProgress"', () => {
 
     localStorage.clear();
   })
+
+  it('Verifica se finaliza Receita', async () => {
+    const { history } = renderWithRouter(<App />);  
+    await act(async () => {
+      history.push('/drinks/178319/in-progress');
+    })
+
+    const allCheckbox = screen.getAllByRole('checkbox');
+
+    allCheckbox.forEach((check) => userEvent.click(check))
+
+    const btnFinish = screen.getByTestId('finish-recipe-btn')
+
+    await act(async () => {
+      userEvent.click(btnFinish)
+    })
+
+    localStorage.clear();    
+  })
 });

@@ -1,3 +1,4 @@
+// Source: https://stackoverflow.com/q/32911630/how-do-i-deal-with-localstorage-in-jest-tests
 class LocalStorageMock {
   constructor() {
     this.store = {};
