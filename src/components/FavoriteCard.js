@@ -62,6 +62,10 @@ function FavoriteCard({ type }) {
           </div>
         ))
       }
+      {
+        (favoriteCards.length === 0 || favoriteCards.id === '')
+        && <div>You don&apos;t have Favorites Recipes</div>
+      }
     </div>
   );
 }

@@ -93,6 +93,10 @@ function DoneRecipesCard({ type }) {
           </div>
         ))
       }
+      {
+        (doneCards.length === 0 || doneCards.id === '')
+        && <div>You don&apos;t have done Recipes</div>
+      }
     </div>
   );
 }

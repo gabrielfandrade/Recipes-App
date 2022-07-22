@@ -32,13 +32,21 @@ const mockFavorite =
     }
   ]
 
+  const clipboard = { ...global.navigator.clipboard }
+
 describe('Testes da tela "Favorite Recipes"', () => {
   beforeEach(() => {
     mock();
+    // Source: https://stackoverflow.com/q/62351935/how-to-mock-navigator-clipboard-writetext-in-jest/67645603#67645603
+    const mockClipboard = {
+      writeText: jest.fn(),
+    };
+    global.navigator.clipboard = mockClipboard;
   })
   afterEach(() => {
     jest.clearAllMocks();
     localStorage.clear();
+    global.navigator.clipboard = clipboard;
   });
 
   it('Verifica os componentes da tela "FavoriteRecipes"', async () => {
@@ -82,6 +90,9 @@ describe('Testes da tela "Favorite Recipes"', () => {
     await act(async () => {
       history.push('/favorite-recipes');
     })
+
+    const noFavorites = screen.getByText(/you don't have favorites recipes/i)
+    expect(noFavorites).toBeInTheDocument();
   });
 
   it('Verifica a filtragem da tela de "FavoriteRecipe"', async () => {
@@ -125,6 +136,9 @@ describe('Testes da tela "Favorite Recipes"', () => {
     const btnShare = screen.getByTestId('0-horizontal-share-btn');
 
     userEvent.click(btnShare);
+
+    expect(navigator.clipboard.writeText).toHaveBeenCalled();
+    expect(navigator.clipboard.writeText).toHaveBeenCalledWith('http://localhost:3000/foods/52977');
   })
 
 })

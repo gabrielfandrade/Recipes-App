@@ -51,13 +51,21 @@ const mockDone =
   },
 ]
 
+const clipboard = { ...global.navigator.clipboard }
+
 describe('Testes da tela "DoneRecipes"', () => {
   beforeEach(() => {
     mock();
+    // Source: https://stackoverflow.com/q/62351935/how-to-mock-navigator-clipboard-writetext-in-jest/67645603#67645603
+    const mockClipboard = {
+      writeText: jest.fn(),
+    };
+    global.navigator.clipboard = mockClipboard;
   })
   afterEach(() => {
     jest.clearAllMocks();
     localStorage.clear();
+    global.navigator.clipboard = clipboard;
   });
 
   it('Verifica os componentes da tela "DoneRecipes"', async () => {
@@ -95,6 +103,24 @@ describe('Testes da tela "DoneRecipes"', () => {
 
     const pastaTag = screen.getByTestId('0-Pasta-horizontal-tag')
     expect(pastaTag).toHaveTextContent(/Pasta/i);
+
+    const curryTag = screen.getByTestId('0-Curry-horizontal-tag')
+    expect(curryTag).toHaveTextContent(/Curry/i);
+
+    const image2 = screen.getByTestId('1-horizontal-image')
+    expect(image2.src).toBe('https://www.thecocktaildb.com/images/media/drink/vyxwut1468875960.jpg');
+
+    const name2 = screen.getByTestId('1-horizontal-name')
+    expect(name2).toHaveTextContent(/GG/i)
+
+    const top2 = screen.getByTestId('1-horizontal-top-text')
+    expect(top2).toHaveTextContent(/\- ordinary drink \- optional alcohol/i);
+
+    const data2 = screen.getByTestId('1-horizontal-done-date')
+    expect(data2).toHaveTextContent('21/07/2022')
+
+    const share2 = screen.getByTestId('1-horizontal-share-btn')
+    expect(share2).toBeInTheDocument()
   })
 
   it('Verifica com localStorage vazio', async () => {
@@ -104,6 +130,9 @@ describe('Testes da tela "DoneRecipes"', () => {
     await act(async () => {
       history.push('/done-recipes');
     })
+
+    const noRecipes = screen.getByText(/you don't have done recipes/i);
+    expect(noRecipes).toBeInTheDocument();
   });
 
   it('Verifica a filtragem da tela de "Done Recipes"', async () => {
@@ -140,5 +169,8 @@ describe('Testes da tela "DoneRecipes"', () => {
     const btnShare = screen.getByTestId('0-horizontal-share-btn');
 
     userEvent.click(btnShare);
+
+    expect(navigator.clipboard.writeText).toHaveBeenCalled();
+    expect(navigator.clipboard.writeText).toHaveBeenCalledWith('http://localhost:3000/foods/52771');
   })
 })
