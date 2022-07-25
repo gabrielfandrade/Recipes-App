@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+// import arrow from '../style/images/arrow.png';
 
 function ButtonStartRecipe({ type, id }) {
   const [isStarded, setIsStarted] = useState(false);
@@ -27,13 +28,20 @@ function ButtonStartRecipe({ type, id }) {
   }, [setIsStarted, type, id]);
 
   return (
-    <div>
+    <div className="container-btn-start">
 
       <Link to={ `/${type}/${id}/in-progress` }>
         <p data-testid="start-recipe-btn" className="btn-start-recipe">
-          { isStarded ? 'Continue Recipe' : 'Start Recipe'}
+          { isStarded ? 'Continue Recipe' : 'Start Recipe!'}
         </p>
+
+        {/* <img
+          src={ arrow }
+          alt="arrow"
+          className="arrow-btn"
+        /> */}
       </Link>
+
     </div>
   );
 }

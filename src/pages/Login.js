@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import '../style/login.css';
 
 function Login({ history }) {
   const [login, setLogin] = useState({
@@ -43,26 +44,37 @@ function Login({ history }) {
 
   return (
     <div>
-      <fieldset>
-        <legend>Login</legend>
-        <label htmlFor="email">
+      <div className="text-principal">
+        <h1>
+          Cooking Experience
+          Like a Chef
+        </h1>
+        <p>Let's make a delicious dish with the best recipe for the family</p>
+      </div>
+
+      <div className="container-login">
+        <p>Login</p>
+
+        <label>
           Email:
-          <input
-            type="email"
-            id="email"
-            data-testid="email-input"
-            onChange={ (event) => handleChange(event.target) }
-          />
         </label>
-        <label htmlFor="senha">
+        <input
+          type="email"
+          id="email"
+          data-testid="email-input"
+          onChange={ (event) => handleChange(event.target) }
+        />
+
+        <label>
           Senha:
-          <input
-            type="password"
-            id="senha"
-            data-testid="password-input"
-            onChange={ (event) => handleChange(event.target) }
-          />
         </label>
+        <input
+          type="password"
+          id="senha"
+          data-testid="password-input"
+          onChange={ (event) => handleChange(event.target) }
+        />
+
         <button
           type="button"
           disabled={ !(validateEmail() && validatePassword()) }
@@ -71,7 +83,7 @@ function Login({ history }) {
         >
           Enter
         </button>
-      </fieldset>
+      </div>
     </div>
   );
 }

@@ -29,19 +29,20 @@ function SearchBar({ history }) {
   };
 
   return (
-    <div>
+    <div className="container-search">
       <input
+        className="search-input"
         type="text"
         data-testid="search-input"
         value={ setSearchForm.input }
+        placeholder="Search"
         onChange={
           ({ target: { value } }) => setSearchForm((prev) => ({ ...prev, input: value }))
         }
       />
 
-      <div>
+      <div className="container-radios">
         <label htmlFor="ingredient-radio">
-          Ingredient
           <input
             type="radio"
             name="search-radio"
@@ -50,10 +51,10 @@ function SearchBar({ history }) {
             value="i"
             onClick={ handleRadio }
           />
+          Ingredient
         </label>
 
         <label htmlFor="name-radio">
-          Name
           <input
             type="radio"
             name="search-radio"
@@ -62,10 +63,10 @@ function SearchBar({ history }) {
             value="s"
             onClick={ handleRadio }
           />
+          Name
         </label>
 
         <label htmlFor="first-radio">
-          First Letter
           <input
             type="radio"
             name="search-radio"
@@ -74,16 +75,19 @@ function SearchBar({ history }) {
             value="f"
             onClick={ handleRadio }
           />
+          First Letter
         </label>
-
-        <button
-          data-testid="exec-search-btn"
-          type="button"
-          onClick={ handleSearch }
-        >
-          Search
-        </button>
       </div>
+
+      <button
+        data-testid="exec-search-btn"
+        type="button"
+        onClick={ handleSearch }
+        className="search-btn-2"
+      >
+        Search
+      </button>
+
     </div>
   );
 }
