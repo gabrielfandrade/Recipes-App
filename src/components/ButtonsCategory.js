@@ -36,7 +36,7 @@ function ButtonsCategory({ history }) {
   };
 
   return (
-    <div>
+    <div className="container-category-btn">
       {
         categories.length > 0
         && categories.map((category, index) => (
@@ -45,6 +45,7 @@ function ButtonsCategory({ history }) {
             type="button"
             key={ index }
             onClick={ () => handleClick(category.strCategory) }
+            className="category-btn"
           >
             { category.strCategory}
           </button>
@@ -54,6 +55,7 @@ function ButtonsCategory({ history }) {
         type="button"
         data-testid="All-category-filter"
         onClick={ () => handleClick2() }
+        className="category-btn"
       >
         All
       </button>

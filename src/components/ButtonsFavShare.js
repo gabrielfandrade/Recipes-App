@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import copy from 'clipboard-copy';
-import shareIcon from '../images/shareIcon.svg';
-import whiteHeartIcon from '../images/whiteHeartIcon.svg';
-import blackHeartIcon from '../images/blackHeartIcon.svg';
+import shareIcon from '../style/images/share.png';
+import whiteHeartIcon from '../style/images/favorite.png';
+import greyHeartIcon from '../style/images/favorite-checked.png';
 
 function ButtonsFavShare({ copyUrl, details, type, testId, update }) {
   const [isCopied, setIsCopied] = useState(false);
@@ -63,11 +63,13 @@ function ButtonsFavShare({ copyUrl, details, type, testId, update }) {
           isFav ? <img
             data-testid={ `${testId}favorite-btn` }
             alt="share-url"
-            src={ blackHeartIcon }
+            src={ greyHeartIcon }
+            className="favorite-btn"
           /> : <img
             data-testid={ `${testId}favorite-btn` }
             src={ whiteHeartIcon }
             alt="share-url"
+            className="favorite-btn"
           />
         }
       </button>
@@ -83,6 +85,7 @@ function ButtonsFavShare({ copyUrl, details, type, testId, update }) {
           data-testid={ `${testId}share-btn` }
           src={ shareIcon }
           alt="share-url"
+          className="share-btn"
         />
       </button>
     </div>

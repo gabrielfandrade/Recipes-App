@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import drinkIcon from '../images/drinkIcon.svg';
-import mealIcon from '../images/mealIcon.svg';
+import drinkIcon from '../style/images/drink-grey.png';
+import mealIcon from '../style/images/food-grey.png';
 
 function Footer() {
   return (
@@ -12,6 +12,7 @@ function Footer() {
             src={ drinkIcon }
             alt="drink"
             data-testid="drinks-bottom-btn"
+            className="drink-btn"
           />
         </button>
       </Link>
@@ -22,6 +23,7 @@ function Footer() {
             src={ mealIcon }
             alt="foods"
             data-testid="food-bottom-btn"
+            className="food-btn"
           />
         </button>
       </Link>

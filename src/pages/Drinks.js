@@ -30,10 +30,18 @@ function Drinks({ history }) {
   return (
     <div>
       <Header title="Drinks" condition history={ history } />
+
+      <div className="container-title-cooking">
+        <h1 data-testid="foods-test">
+          Find Best Recipe
+        </h1>
+        <h1>
+          For Cooking
+        </h1>
+      </div>
+
       <ButtonsCategory history={ history } />
-      <h1 data-testid="foods-test">
-        Recipes
-      </h1>
+
       {
         recipes
         && recipes.map((recipe, index) => {

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import OtherRecipesDrinks from './OtherRecipesDrinks';
 import ButtonsFavShare from './ButtonsFavShare';
 import ButtonFinishRecipe from './ButtonFinishRecipe';
+// import '../style/details.css';
 
 function FoodCard({ details, page, history }) {
   const [ingredients, setIngredients] = useState([]);
@@ -79,10 +80,14 @@ function FoodCard({ details, page, history }) {
   const ingredientsList = () => {
     if (page === 'details') {
       return (
-        <ul>
+        <ul className="container-ingredient">
           {
             ingredients.map((ingredient, index) => (
-              <li key={ index } data-testid={ `${index}-ingredient-name-and-measure` }>
+              <li
+                key={ index }
+                data-testid={ `${index}-ingredient-name-and-measure` }
+                className="item-ingredient"
+              >
                 { details[ingredient[0]] }
                 { details[`strMeasure${index + 1}`] }
               </li>
@@ -114,32 +119,53 @@ function FoodCard({ details, page, history }) {
 
   return (
     <div>
-      <img
-        src={ details.strMealThumb }
-        alt={ details.strMeal }
-        width="150px"
-        data-testid="recipe-photo"
-      />
-      <h2 data-testid="recipe-title">
+      <h2 data-testid="recipe-title" className="recipe-name">
         { details.strMeal }
       </h2>
-      <ButtonsFavShare
-        type="food"
-        details={ details }
-        copyUrl={ `http://localhost:3000/foods/${details.idMeal}` }
-        testId=""
-        update={ () => {} }
-      />
-      <p data-testid="recipe-category">
-        { details.strCategory }
-      </p>
-      { ingredientsList() }
-      <p data-testid="instructions">
-        { details.strInstructions}
+
+      <div className="container-details1">
+        <img
+          src={ details.strMealThumb }
+          alt={ details.strMeal }
+          width="150px"
+          data-testid="recipe-photo"
+          className="recipe-img"
+        />
+        <div className="container-details2">
+          <p data-testid="recipe-category">
+            { details.strCategory }
+          </p>
+
+          <ButtonsFavShare
+            type="food"
+            details={ details }
+            copyUrl={ `http://localhost:3000/foods/${details.idMeal}` }
+            testId=""
+            update={ () => {} }
+          />
+        </div>
+      </div>
+
+      <p className="title-ingridients">
+        Ingridients
       </p>
 
-      {
-        page === 'details'
+      { ingredientsList() }
+
+      <div className="container-instructions">
+        <p className="title-instructions">Instructions</p>
+
+        <div className="container-instructions2">
+          <p data-testid="instructions" className="text-instructions">
+            { details.strInstructions}
+          </p>
+        </div>
+
+      </div>
+
+      <div className="container-video">
+        {
+          page === 'details'
         && (
           <iframe
             src={ details.strYoutube.replace('watch?v=', 'embed/') }
@@ -149,11 +175,13 @@ function FoodCard({ details, page, history }) {
             allowFullScreen
             title="video"
             data-testid="video"
+            className="video"
           >
             {}
           </iframe>
         )
-      }
+        }
+      </div>
 
       {
         page === 'details'

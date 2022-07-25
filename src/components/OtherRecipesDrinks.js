@@ -6,13 +6,14 @@ function OtherRecipesDrinks() {
   const { recommendation } = useContext(appContext);
   return (
     <div
-      className="recommendations"
+      className="container-recommendations"
     >
       {
         recommendation.map((recipe, index) => (
           <div
             key={ `${recipe.strDrink}-${index}` }
             data-testid={ `${index}-recomendation-card` }
+            className="recommendations-card"
           >
             <img width="100px" src={ recipe.strDrinkThumb } alt="recommendation" />
             <span

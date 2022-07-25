@@ -5,6 +5,7 @@ import DrinkCard from '../components/DrinkCard';
 import FoodCard from '../components/FoodCard';
 import appContext from '../context/Context';
 import ButtonStartRecipe from '../components/ButtonStartRecipe';
+import '../style/details.css';
 
 function RecipeDetails({ history, match: { params } }) {
   const { requestRecommendations } = useContext(appContext);

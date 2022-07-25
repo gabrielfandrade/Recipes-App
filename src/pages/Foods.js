@@ -5,6 +5,7 @@ import Footer from '../components/Footer';
 import Recipes from '../components/Recipes';
 import appContext from '../context/Context';
 import ButtonsCategory from '../components/ButtonsCategory';
+import '../style/recipes.css';
 
 function Foods({ history }) {
   const {
@@ -30,11 +31,18 @@ function Foods({ history }) {
   return (
     <div>
       <Header title="Foods" condition history={ history } />
+
+      <div className="container-title-cooking">
+        <h1 data-testid="foods-test">
+          Find Best Recipe
+        </h1>
+        <h1>
+          For Cooking
+        </h1>
+      </div>
+
       <ButtonsCategory history={ history } />
 
-      <h1 data-testid="foods-test">
-        Recipes
-      </h1>
       {
         recipes
         && recipes.map((recipe, index) => {
