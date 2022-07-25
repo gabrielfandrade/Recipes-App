@@ -1,8 +1,10 @@
+/* eslint-disable react/prop-types */
 import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import OtherRecipesFoods from './OtherRecipesFoods';
 import ButtonsFavShare from './ButtonsFavShare';
 import ButtonFinishRecipe from './ButtonFinishRecipe';
+import arrow from '../style/images/arrow-grey.png';
 
 function DrinkCard({ details, page, history }) {
   const [ingredients, setIngredients] = useState([]);
@@ -78,12 +80,16 @@ function DrinkCard({ details, page, history }) {
   const ingredientsList = () => {
     if (page === 'details') {
       return (
-        <ul>
+        <ul className="container-ingredient">
           {
             ingredients.map((ingredient, index) => (
-              <li key={ index } data-testid={ `${index}-ingredient-name-and-measure` }>
-                { details[ingredient[0]] }
-                { details[`strMeasure${index + 1}`] }
+              <li
+                key={ index }
+                data-testid={ `${index}-ingredient-name-and-measure` }
+                className="item-ingredient"
+              >
+                <div>{ details[ingredient[0]] }</div>
+                <div>{ details[`strMeasure${index + 1}`] }</div>
               </li>
             ))
           }
@@ -93,8 +99,12 @@ function DrinkCard({ details, page, history }) {
       <div>
         {
           ingredients.map((ingredient, index) => (
-            <div key={ index } data-testid={ `${index}-ingredient-step` }>
-              <label htmlFor={ ingredient[0] }>
+            <div
+              key={ index }
+              data-testid={ `${index}-ingredient-step` }
+              className="container-ingredient"
+            >
+              <label htmlFor={ ingredient[0] } className="item-ingredient">
                 { `${details[ingredient[0]]} - ${details[`strMeasure${index + 1}`]}` }
                 <input
                   type="checkbox"
@@ -112,33 +122,70 @@ function DrinkCard({ details, page, history }) {
 
   return (
     <div>
-      <img
-        src={ details.strDrinkThumb }
-        alt={ details.strDrink }
-        width="150px"
-        data-testid="recipe-photo"
-      />
-      <h2
-        data-testid="recipe-title"
-      >
-        { details.strDrink }
-      </h2>
-      <ButtonsFavShare
-        type="drink"
-        details={ details }
-        copyUrl={ `http://localhost:3000/drinks/${details.idDrink}` }
-        testId=""
-        update={ () => {} }
-      />
-      <p
-        data-testid="recipe-category"
-      >
-        { details.strAlcoholic }
+
+      <div className="container-details-header">
+        <div>
+          <button
+            type="button"
+            onClick={ () => history.push('/drinks') }
+          >
+            <img
+              src={ arrow }
+              className="home-btn"
+              alt="home"
+            />
+          </button>
+        </div>
+
+        <h2
+          data-testid="recipe-title"
+          className="recipe-name"
+        >
+          { details.strDrink }
+        </h2>
+      </div>
+
+      <div className="container-details1">
+        <img
+          src={ details.strDrinkThumb }
+          alt={ details.strDrink }
+          width="150px"
+          data-testid="recipe-photo"
+          className="recipe-img"
+        />
+
+        <div className="container-details2">
+          <p
+            data-testid="recipe-category"
+          >
+            { details.strAlcoholic }
+          </p>
+
+          <ButtonsFavShare
+            type="drink"
+            details={ details }
+            copyUrl={ `http://localhost:3000/drinks/${details.idDrink}` }
+            testId=""
+            update={ () => {} }
+          />
+        </div>
+      </div>
+
+      <p className="title-ingridients">
+        Ingridients
       </p>
+
       { ingredientsList() }
-      <p data-testid="instructions">
-        { details.strInstructions }
-      </p>
+
+      <div className="container-instructions">
+        <p className="title-instructions">Instructions</p>
+        <div className="container-instructions2">
+          <p data-testid="instructions" className="text-instructions">
+            { details.strInstructions }
+          </p>
+        </div>
+      </div>
+
       {
         page === 'details'
         && <OtherRecipesFoods />

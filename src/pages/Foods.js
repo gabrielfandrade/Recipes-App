@@ -8,8 +8,8 @@ import ButtonsCategory from '../components/ButtonsCategory';
 import '../style/recipes.css';
 
 function Foods({ history }) {
-  const {
-    recipes, requestFirstRecipes, requestCategories, redirect } = useContext(appContext);
+  const { recipes, requestFirstRecipes,
+    requestCategories, redirect } = useContext(appContext);
 
   useEffect(() => {
     if (redirect) {
@@ -61,7 +61,7 @@ function Foods({ history }) {
           return null;
         })
       }
-      <Footer />
+      <Footer history={ history } />
     </div>
   );
 }

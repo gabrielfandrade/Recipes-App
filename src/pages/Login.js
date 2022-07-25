@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import '../style/login.css';
+import loginsvg from '../images/loginsvg.svg';
 
 function Login({ history }) {
   const [login, setLogin] = useState({
@@ -43,39 +44,32 @@ function Login({ history }) {
   };
 
   return (
-    <div>
-      <div className="text-principal">
-        <h1>
-          Cooking Experience
-          Like a Chef
-        </h1>
-        <p>Let's make a delicious dish with the best recipe for the family</p>
-      </div>
+    <div className="div-principal">
 
       <div className="container-login">
-        <p>Login</p>
+        <div id="login">
+          <img src={ loginsvg } alt="icone de login" />
+          <p>Sign in</p>
+        </div>
 
-        <label>
-          Email:
-        </label>
         <input
           type="email"
           id="email"
+          placeholder="Enter your email"
           data-testid="email-input"
           onChange={ (event) => handleChange(event.target) }
         />
 
-        <label>
-          Senha:
-        </label>
         <input
           type="password"
+          placeholder="Enter your password"
           id="senha"
           data-testid="password-input"
           onChange={ (event) => handleChange(event.target) }
         />
 
         <button
+          id="button-login"
           type="button"
           disabled={ !(validateEmail() && validatePassword()) }
           data-testid="login-submit-btn"

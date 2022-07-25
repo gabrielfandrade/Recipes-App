@@ -47,7 +47,7 @@ function ButtonsCategory({ history }) {
             onClick={ () => handleClick(category.strCategory) }
             className="category-btn"
           >
-            { category.strCategory}
+            { category.strCategory }
           </button>
         ))
       }

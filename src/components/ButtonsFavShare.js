@@ -19,8 +19,7 @@ function ButtonsFavShare({ copyUrl, details, type, testId, update }) {
     setIsFav(fav);
   }, [details, type]);
 
-  function setFavorite() {
-    const favoriteRecipes = [];
+  function setFavorite(favoriteRecipes) {
     const objectForLocalStorage = {
       id: details.idMeal || details.idDrink,
       type,
@@ -40,7 +39,7 @@ function ButtonsFavShare({ copyUrl, details, type, testId, update }) {
       favoriteRecipes = [];
     }
     if (!isFav) {
-      setFavorite();
+      setFavorite(favoriteRecipes);
       setIsFav(true);
     } else {
       const typeID = details.idMeal || details.idDrink || details.id;
@@ -52,7 +51,7 @@ function ButtonsFavShare({ copyUrl, details, type, testId, update }) {
   };
 
   return (
-    <div>
+    <div className="container-btn-fav-share">
       { isCopied ? <p>Link copied!</p> : null }
       <button
         onClick={ handleClick }

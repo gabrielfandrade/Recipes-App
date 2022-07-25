@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Header from '../components/Header';
 import FavoriteCard from '../components/FavoriteCard';
+import '../style/doneAndFav.css';
 
 function FavoriteRecipes({ history }) {
   const [filterButtons, setFilterButtons] = useState('');
@@ -12,7 +13,7 @@ function FavoriteRecipes({ history }) {
         <Header title="Favorite Recipes" condition={ false } history={ history } />
       </div>
 
-      <div>
+      <div className="container-btn-filter">
         <button
           type="button"
           data-testid="filter-by-all-btn"

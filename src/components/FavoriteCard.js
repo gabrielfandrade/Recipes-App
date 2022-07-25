@@ -34,31 +34,52 @@ function FavoriteCard({ type }) {
       {
         favoriteCards.length > 0
         && favoriteCards.map((card, index) => (
-          <div key={ card.name }>
-            <Link to={ `/${card.type}s/${card.id}` }>
-              <img
-                src={ card.image }
-                alt="card-recipes-favorite"
-                width="100px"
-                data-testid={ `${index}-horizontal-image` }
-              />
-              <p data-testid={ `${index}-horizontal-name` }>
-                { card.name }
-              </p>
-            </Link>
+          <div key={ card.name } className="container-done-card">
 
-            <p data-testid={ `${index}-horizontal-top-text` }>
-              { `${card.nationality} - ${card.category} - ${card.alcoholicOrNot}` }
-            </p>
+            <div className="container-done-card2">
 
-            <ButtonsFavShare
-              copyUrl={ `http://localhost:3000/${card.type}s/${card.id}` }
-              details={ card }
-              type={ card.type }
-              testId={ `${index}-horizontal-` }
-              update={ setFavoriteCards }
-            />
+              <Link to={ `/${card.type}s/${card.id}` }>
+                <img
+                  src={ card.image }
+                  alt="card-recipes-favorite"
+                  width="100px"
+                  data-testid={ `${index}-horizontal-image` }
+                  className="img-card"
+                />
+              </Link>
 
+              <div className="container-done-card3">
+
+                <div className="container-done-card4">
+                  <p data-testid={ `${index}-horizontal-name` } className="name-card">
+                    { card.name }
+                  </p>
+
+                  <ButtonsFavShare
+                    copyUrl={ `http://localhost:3000/${card.type}s/${card.id}` }
+                    details={ card }
+                    type={ card.type }
+                    testId={ `${index}-horizontal-` }
+                    update={ setFavoriteCards }
+                  />
+                </div>
+
+                <div className="container-info">
+                  <p data-testid={ `${index}-horizontal-top-text` }>
+                    {card.nationality}
+                  </p>
+
+                  <p>
+                    {card.category}
+                  </p>
+
+                  <p>
+                    {card.alcoholicOrNot}
+                  </p>
+                </div>
+              </div>
+
+            </div>
           </div>
         ))
       }

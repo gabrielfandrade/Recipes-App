@@ -1,9 +1,11 @@
+/* eslint-disable max-lines */
+/* eslint-disable react/prop-types */
 import React, { useEffect, useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import OtherRecipesDrinks from './OtherRecipesDrinks';
 import ButtonsFavShare from './ButtonsFavShare';
 import ButtonFinishRecipe from './ButtonFinishRecipe';
-// import '../style/details.css';
+import arrow from '../style/images/arrow-grey.png';
 
 function FoodCard({ details, page, history }) {
   const [ingredients, setIngredients] = useState([]);
@@ -88,8 +90,8 @@ function FoodCard({ details, page, history }) {
                 data-testid={ `${index}-ingredient-name-and-measure` }
                 className="item-ingredient"
               >
-                { details[ingredient[0]] }
-                { details[`strMeasure${index + 1}`] }
+                <div>{ details[ingredient[0]] }</div>
+                <div>{ details[`strMeasure${index + 1}`] }</div>
               </li>
             ))
           }
@@ -100,15 +102,22 @@ function FoodCard({ details, page, history }) {
       <div>
         {
           ingredients.map((ingredient, index) => (
-            <div key={ index } data-testid={ `${index}-ingredient-step` }>
-              <label htmlFor={ ingredient[0] }>
-                { `${details[ingredient[0]]} - ${details[`strMeasure${index + 1}`]}` }
-                <input
-                  type="checkbox"
-                  id={ ingredient[0] }
-                  checked={ checked[ingredient[0]] }
-                  onChange={ handleChange }
-                />
+            <div
+              key={ index }
+              data-testid={ `${index}-ingredient-step` }
+              className="container-ingredient"
+            >
+              <label htmlFor={ ingredient[0] } className="item-ingredient">
+                <div>{ `${details[ingredient[0]]}` }</div>
+                <div className="measure-checkbox">
+                  { `${details[`strMeasure${index + 1}`]}` }
+                  <input
+                    type="checkbox"
+                    id={ ingredient[0] }
+                    checked={ checked[ingredient[0]] }
+                    onChange={ handleChange }
+                  />
+                </div>
               </label>
             </div>
           ))
@@ -119,9 +128,24 @@ function FoodCard({ details, page, history }) {
 
   return (
     <div>
-      <h2 data-testid="recipe-title" className="recipe-name">
-        { details.strMeal }
-      </h2>
+      <div className="container-details-header">
+        <div>
+          <button
+            type="button"
+            onClick={ () => history.push('/foods') }
+          >
+            <img
+              src={ arrow }
+              className="home-btn"
+              alt="home"
+            />
+          </button>
+        </div>
+
+        <h2 data-testid="recipe-title" className="recipe-name">
+          { details.strMeal }
+        </h2>
+      </div>
 
       <div className="container-details1">
         <img

@@ -1,7 +1,7 @@
-body {
+/* body {
   background: #FBFCFE;
   font-family: 'League Spartan', sans-serif;
-}
+} */
 
 .favorite-btn {
   height: 22px;
@@ -9,6 +9,17 @@ body {
 
 .share-btn {
   height: 22px;
+}
+
+.container-details-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.home-btn {
+  height: 22px;
+  margin-left: 15px;
 }
 
 .recipe-name {
@@ -20,6 +31,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-right: 165px;
 }
 
 .container-details1 {
@@ -36,8 +48,19 @@ body {
 }
 
 .container-details2 {
+  width: 293px;
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  font-size: 20px;
+  color: #636060; 
+}
+
+.container-btn-fav-share {
+  width: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .title-ingridients {
@@ -66,8 +89,17 @@ body {
   height: 31px;
   border-radius: 5px;
   padding: 15px;
+  justify-content: space-between;
 }
 
+.measure-checkbox {
+  display: flex;
+  align-items: center;
+}
+
+.measure-checkbox input {
+  margin-left: 5px;
+}
 
 .container-instructions2 {
   display: flex;
@@ -120,6 +152,7 @@ body {
   position: fixed;
   bottom: 0;
   border-radius: 25px 25px 0 0;
+  z-index: 9999;
 }
 
 .btn-finish-recipe:disabled {
@@ -135,14 +168,21 @@ body {
 
 .container-recommendations {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow-x: scroll;
+  margin-bottom: 70px;
+  /* position: absolute; */
 }
 
 .recommendations-card {
-  background: rgb(255, 255, 255);
-  width: 300px;
-  margin-bottom: 70px;
+  /* background: rgb(255, 255, 255); */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   margin-top: 30px;
+}
+
+.recommendations-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin-bottom: 50px;
 }

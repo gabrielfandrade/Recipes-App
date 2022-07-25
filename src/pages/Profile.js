@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import profileIcon from '../style/images/do-utilizador.png';
+import '../style/profile.css';
 
 function Profile({ history }) {
   const [user, setUser] = useState('');
@@ -24,31 +26,44 @@ function Profile({ history }) {
   return (
     <div>
       <Header title="Profile" condition={ false } history={ history } />
-      <div>
-        <span data-testid="profile-email">{ user }</span>
+      <div className="container-profile">
+        <img
+          alt="profileIcon"
+          src={ profileIcon }
+          className="profileIcon"
+        />
+
+        <span data-testid="profile-email" className="username">{ user }</span>
+
         <button
           data-testid="profile-done-btn"
           type="button"
           onClick={ () => history.push('/done-recipes') }
+          className="btn-done-recipes"
         >
-          Done Recipes
+          <span>Done Recipes</span>
         </button>
+
         <button
           data-testid="profile-favorite-btn"
           type="button"
           onClick={ () => history.push('/favorite-recipes') }
+          className="btn-fav-recipes"
         >
-          Favorite Recipes
+          <span>Favorite Recipes</span>
         </button>
+
         <button
           data-testid="profile-logout-btn"
           type="button"
           onClick={ handleLogout }
+          className="btn-logout"
         >
-          Logout
+          <span>Logout</span>
         </button>
       </div>
-      <Footer />
+
+      <Footer history={ history } />
     </div>
   );
 }

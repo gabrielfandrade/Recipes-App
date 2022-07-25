@@ -60,7 +60,7 @@ function Drinks({ history }) {
           return null;
         })
       }
-      <Footer />
+      <Footer history={ history } />
     </div>
   );
 }

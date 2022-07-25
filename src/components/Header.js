@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import searchIcon from '../style/images/search-grey.png';
 import SearchBar from './SearchBar';
 import profileIcon from '../style/images/profile-grey.png';
+import profileBlackIcon from '../style/images/profile-black.png';
 
 function Header({ history, title, condition }) {
   const [inputSearch, setInputSearch] = useState(false);
@@ -12,13 +13,21 @@ function Header({ history, title, condition }) {
     setInputSearch(!inputSearch);
   };
 
+  const btnProfile = () => {
+    const { pathname } = history.location;
+    if (pathname === '/profile') {
+      return profileBlackIcon;
+    }
+    return profileIcon;
+  };
+
   return (
     <header className="header">
       <div className="container-btn-type">
         <Link to="/profile">
           <button type="button">
             <img
-              src={ profileIcon }
+              src={ btnProfile() }
               alt="profile"
               data-testid="profile-top-btn"
               className="profile-btn"
