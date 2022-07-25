@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import '../style/login.css';
 import loginsvg from '../images/loginsvg.svg';
+import imageBack from '../style/images/login.png';
 
 function Login({ history }) {
   const [login, setLogin] = useState({
@@ -45,8 +46,10 @@ function Login({ history }) {
 
   return (
     <div className="div-principal">
+      <img src={ imageBack } alt="background" />
 
       <div className="container-login">
+
         <div id="login">
           <img src={ loginsvg } alt="icone de login" />
           <p>Sign in</p>

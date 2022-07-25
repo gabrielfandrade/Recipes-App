@@ -16,7 +16,9 @@ function Recipes({ url, name, img, index }) {
           alt="recipes"
           className="card-img"
         />
-        <p data-testid={ `${index}-card-name` } className="card-name">{ name }</p>
+        <div className="container-name">
+          <p data-testid={ `${index}-card-name` } className="card-name">{ name }</p>
+        </div>
       </Link>
     </div>
   );

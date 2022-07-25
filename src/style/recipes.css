@@ -157,6 +157,10 @@ body {
   position: relative;
 }
 
+.container-recipes p {
+  /* font-size: 4vw; */
+}
+
 .card-img {
   height: 277px;
   width: 293px;
@@ -166,14 +170,19 @@ body {
   /* box-shadow: 5px 5px 5px rgb(139, 139, 139); */
 }
 
-.card-name {
+.container-name {
+  background-color: hsl(220, 60%, 99%, 0.8);
   position: absolute;
-  color: #1F1F1F;
-  top: 220px;
-  font-size: 28px;
-  font-weight: bold;
+  top: 60px;
   left: 188px;
-  background-color: #FBFCFE;
   width: 140px;
-  height: 40px;
 }
+
+.card-name {
+  color: #1F1F1F;
+  font-size: 20px;
+  font-weight: bold;
+  margin-left: 10px;
+}
+
+
