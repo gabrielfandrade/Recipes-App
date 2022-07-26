@@ -47,7 +47,7 @@ function ButtonsCategory({ history }) {
             onClick={ () => handleClick(category.strCategory) }
             className="category-btn"
           >
-            { category.strCategory }
+            <span>{ category.strCategory }</span>
           </button>
         ))
       }
@@ -57,7 +57,7 @@ function ButtonsCategory({ history }) {
         onClick={ () => handleClick2() }
         className="category-btn"
       >
-        All
+        <span>All</span>
       </button>
 
     </div>

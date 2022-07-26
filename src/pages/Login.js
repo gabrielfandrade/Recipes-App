@@ -15,6 +15,7 @@ function Login({ history }) {
     const re = /\S+@\S+\.\S+/;
     return re.test(email);
   };
+
   const validatePassword = () => {
     const { senha } = login;
     const NUM = 6;
@@ -39,8 +40,6 @@ function Login({ history }) {
       cocktails: {},
       meals: {},
     }));
-    localStorage.setItem('favoriteRecipes', JSON.stringify([]));
-    localStorage.setItem('doneRecipes', JSON.stringify([]));
     history.push('/foods');
   };
 
